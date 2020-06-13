@@ -27,3 +27,21 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+//扩展配置
+//相当于定义常量，在gradle中引用
+//方便以后有多个模块时，可以统一这些配置
+ext {
+    //编译版本
+    compileSdkVersion = 29
+    //编译工具版本
+    buildToolsVersion = "29.0.3"
+    //最小版本
+    minSdkVersion = 16
+    //目标版本
+    targetSdkVersion = 29
+    //版本号
+    versionCode = 1
+    //版本名称
+    versionName = "1.0"
+}
