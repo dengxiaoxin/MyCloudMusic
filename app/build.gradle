@@ -41,8 +41,12 @@ dependencies {
     //请求网络相关
     //okhttp
     implementation "com.squareup.okhttp3:okhttp:4.7.2"
+    //圆形指示器
+    //https://github.com/ongakuer/CircleIndicator
+    implementation 'me.relex:circleindicator:2.1.4'
 
     //Java测试依赖
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.13'
     //Android测试依赖
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

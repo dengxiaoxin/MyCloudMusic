@@ -1,4 +1,9 @@
 <resources>
-    <string name="app_name">MyCloudMusic</string>
+    <string name="app_name">我的云音乐</string>
+
     <string name="copyright">Copyright © 2019 Ixuea. All Rights Reserved</string>
+
+    <!--登录/注册-->
+    <string name="login_or_register">登录/注册</string>
+    <string name="experience_right_now">立即体验</string>
 </resources>

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,7 +14,7 @@ import android.view.View;
 
 import com.jacky.mycloudmusic.R;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseCommonActivity {
 
     /**
      * 默认倒计时时间,单位秒
@@ -24,27 +25,30 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+    }
 
-        //设置界面全屏
+    @Override
+    protected void initViews() {
+        super.initViews();
+
+        //设置全屏
         fullScreen();
 
         //开启倒计时；
         startTimerTask(DEFAULT_COUNT_TIME);
+
+        //测试偏好设置
+//        SharedPreferences preferences = getSharedPreferences("dengxiaoxin", MODE_PRIVATE);
+//
+//        preferences.edit().putString("username", "我是邓小鑫").apply();
+//        String username = preferences.getString("username", null);
+//        Log.d("=============", "initViews: " + "第一次获取的值：" + username);
+//        preferences.edit().remove("username").apply();
+//        username = preferences.getString("username", null);
+//        Log.d("=============", "initViews: " + "删除后再次获取的值：" + username);
     }
 
-    private void fullScreen() {
-        View decorView = getWindow().getDecorView();
-        if (Build.VERSION.SDK_INT < 19) {
-            decorView.setSystemUiVisibility(View.GONE);
-        } else {
-            int options = View.SYSTEM_UI_FLAG_FULLSCREEN |
-                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-            decorView.setSystemUiVisibility(options);
-        }
-    }
-
-    public void startTimerTask(int time) {
+    private void startTimerTask(int time) {
         TimerTask timerTask = new TimerTask(SplashActivity.this);
         timerTask.execute(time);
     }
@@ -83,31 +87,16 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             //Log.i("================", "startMainActivity");
-            startActivityAndFinishThis(GuideActivity.class);
+            if (sp.isShowGuide()) {
+                startActivityAndFinishThis(GuideActivity.class);
+            } else {
+                startActivityAndFinishThis(LoginOrRegisterActivity.class);
+            }
         }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
 
         }
-    }
-
-    /**
-     * 启动界面并关闭当前界面
-     * @param clazz 要启动的界面
-     */
-    protected void startActivityAndFinishThis(Class<?> clazz) {
-        Intent intent = new Intent(getApplicationContext(), clazz);
-        startActivity(intent);
-        finish();
-    }
-
-    /**
-     * 启动界面
-     * @param clazz 要启动的界面
-     */
-    protected void startActivity(Class<?> clazz) {
-        Intent intent = new Intent(getApplicationContext(), clazz);
-        startActivity(intent);
     }
 }
