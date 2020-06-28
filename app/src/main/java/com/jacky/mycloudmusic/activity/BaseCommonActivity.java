@@ -1,8 +1,11 @@
 package com.jacky.mycloudmusic.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 
 import com.jacky.mycloudmusic.util.PreferencesUtil;
@@ -43,6 +46,77 @@ public class BaseCommonActivity extends BaseActivity {
     protected void hideStatusBar() {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    /**
+     * 设置全透状态栏
+     * 默认设置内容显示到状态栏以及状态栏颜色为白色系
+     */
+    protected void setStatusBarFullTransparent() {
+        Window window = getCurrentActivity().getWindow();
+        if (Build.VERSION.SDK_INT >= 21) {//21表示5.0
+            //去除半透明状态栏(如果有)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            //背景颜色透明
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+
+            //SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN：让内容显示到状态栏
+            //SYSTEM_UI_FLAG_LAYOUT_STABLE：状态栏文字显示白色
+            //SYSTEM_UI_FLAG_LIGHT_STATUS_BAR：状态栏文字显示黑色
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+
+        } else if (Build.VERSION.SDK_INT >= 19) {//19表示4.4
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            //虚拟键盘也透明
+            //window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+    }
+
+    /**
+     * 半透明状态栏
+     */
+    protected void setHalfTransparent() {
+        Window window = getCurrentActivity().getWindow();
+        if (Build.VERSION.SDK_INT >= 21) {//21表示5.0
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+
+        } else if (Build.VERSION.SDK_INT >= 19) {//19表示4.4
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            //虚拟键盘也透明
+            //window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+    }
+
+    /**
+     * 调整内容是否紧贴着StatusBar（紧贴就是内容不显示到状态栏）
+     * 应该在对应的xml布局文件中，设置根布局fitsSystemWindows=true
+     */
+    protected void setFitSystemWindow(boolean fitSystemWindow) {
+        View contentViewGroup = ((ViewGroup) getCurrentActivity().findViewById(android.R.id.content)).getChildAt(0);
+        contentViewGroup.setFitsSystemWindows(fitSystemWindow);
+    }
+
+    /**
+     * 设置状态栏图标颜色  true:黑色 false：白色
+     */
+    //SYSTEM_UI_FLAG_LIGHT_STATUS_BAR：状态栏文字显示黑色
+    protected void changStatusIconColor(boolean setDark) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            View decorView = getCurrentActivity().getWindow().getDecorView();
+            if (decorView != null) {
+                int vis = decorView.getSystemUiVisibility();
+                if (setDark) {
+                    vis |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+                } else {
+                    vis &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+                }
+                decorView.setSystemUiVisibility(vis);
+            }
+        }
     }
 
     /**
