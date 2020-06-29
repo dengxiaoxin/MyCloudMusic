@@ -10,12 +10,25 @@ import android.view.WindowManager;
 
 import com.jacky.mycloudmusic.util.PreferencesUtil;
 
+import butterknife.ButterKnife;
+
 public class BaseCommonActivity extends BaseActivity {
 
     /**
      * 偏好设置实例
      */
     protected PreferencesUtil sp;
+
+    @Override
+    protected void initViews() {
+        super.initViews();
+
+        //初始化注解引用控件
+        //绑定方法框架
+        if (isBindView()) {
+            bindView();
+        }
+    }
 
     @Override
     protected void initData() {
@@ -141,4 +154,19 @@ public class BaseCommonActivity extends BaseActivity {
     protected BaseCommonActivity getCurrentActivity() {
         return this;
     }
+
+    /**
+     * 是否绑定View
+     */
+    protected boolean isBindView() {
+        return true;
+    }
+
+    /**
+     * 绑定View
+     */
+    protected void bindView() {
+        ButterKnife.bind(this);
+    }
+
 }
