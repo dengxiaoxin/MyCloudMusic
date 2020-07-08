@@ -1,11 +1,11 @@
 package com.jacky.mycloudmusic.activity;
 
 import android.os.Bundle;
-import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.jacky.mycloudmusic.MainActivity;
 import com.jacky.mycloudmusic.R;
 import com.jacky.mycloudmusic.adapter.CommonViewPagerAdapter;
 import com.jacky.mycloudmusic.fragment.GuideFragment;

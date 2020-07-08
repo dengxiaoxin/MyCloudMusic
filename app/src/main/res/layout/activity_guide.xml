@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color"
     android:orientation="vertical"
     tools:context=".activity.GuideActivity">
 
@@ -39,11 +38,9 @@
         <!--登录注册按钮-->
         <Button
             android:id="@+id/btn_login_or_register"
+            style="@style/PrimaryBtn"
             android:layout_width="@dimen/button_width_large"
-            android:layout_height="@dimen/button_height"
-            android:background="@drawable/selector_color_primary"
-            android:text="@string/login_or_register"
-            android:textColor="@color/selector_text_color_primary_reverse" />
+            android:text="@string/login_or_register" />
 
         <!--占位控件-->
         <View
@@ -55,11 +52,9 @@
         <!--立即体验按钮-->
         <Button
             android:id="@+id/btn_enter"
+            style="@style/PrimaryReverseBtn"
             android:layout_width="@dimen/button_width_large"
-            android:layout_height="@dimen/button_height"
-            android:background="@drawable/selector_color_primary_reverse"
-            android:text="@string/experience_right_now"
-            android:textColor="@color/selector_text_color_primary" />
+            android:text="@string/experience_right_now" />
 
         <!--占位控件-->
         <View

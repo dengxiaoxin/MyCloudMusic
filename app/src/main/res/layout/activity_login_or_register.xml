@@ -31,25 +31,19 @@
 
         <Button
             android:id="@+id/btn_login"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/button_height"
+            style="@style/PrimaryReverseBtn"
             android:layout_marginHorizontal="@dimen/margin_large"
-            android:background="@drawable/selector_color_primary_reverse"
             android:text="@string/login"
-            android:textColor="@color/selector_text_color_primary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btn_register"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/button_height"
+            style="@style/PrimaryReverseBtn"
             android:layout_marginHorizontal="@dimen/margin_large"
             android:layout_marginTop="@dimen/margin_large"
-            android:background="@drawable/selector_color_primary_reverse"
             android:text="@string/register"
-            android:textColor="@color/selector_text_color_primary"
             app:layout_constraintEnd_toEndOf="@+id/btn_login"
             app:layout_constraintStart_toStartOf="@+id/btn_login"
             app:layout_constraintTop_toBottomOf="@+id/btn_login" />

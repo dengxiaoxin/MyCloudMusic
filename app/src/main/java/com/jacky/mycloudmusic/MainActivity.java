@@ -1,4 +1,4 @@
-package com.jacky.mycloudmusic.activity;
+package com.jacky.mycloudmusic;
 
 import androidx.appcompat.app.AppCompatActivity;
 

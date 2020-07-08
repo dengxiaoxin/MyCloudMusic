@@ -117,7 +117,7 @@ public class BaseCommonActivity extends BaseActivity {
      * 设置状态栏图标颜色  true:黑色 false：白色
      */
     //SYSTEM_UI_FLAG_LIGHT_STATUS_BAR：状态栏文字显示黑色
-    protected void changStatusIconColor(boolean setDark) {
+    protected void changeStatusIconColor(boolean setDark) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             View decorView = getCurrentActivity().getWindow().getDecorView();
             if (decorView != null) {
@@ -148,6 +148,16 @@ public class BaseCommonActivity extends BaseActivity {
      */
     protected void startActivity(Class<?> clazz) {
         Intent intent = new Intent(getCurrentActivity(), clazz);
+        startActivity(intent);
+    }
+
+    /**
+     * 启动界面,并告知要添加的Fragment
+     * @param clazz 要启动的界面
+     */
+    protected void startActivity(Class<?> clazz, String fragmentTag) {
+        Intent intent = new Intent(getCurrentActivity(), clazz);
+        intent.putExtra("fragmentTag", fragmentTag);
         startActivity(intent);
     }
 

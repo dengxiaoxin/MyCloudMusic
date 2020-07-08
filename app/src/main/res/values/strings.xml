@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">wo云音乐</string>
+    <string name="app_name">星星云音乐</string>
 
     <string name="copyright">Copyright © 2019 Ixuea. All Rights Reserved</string>
 
@@ -9,4 +9,22 @@
     <string name="login">登录</string>
     <string name="register">注册</string>
     <string name="other_login_way">其他登录方式</string>
+    <string name="enter_username">请输入手机号/邮箱</string>
+    <string name="enter_password">请输入密码(6~15位)</string>
+    <string name="forget_password">忘记密码?</string>
+    <string name="login_success">登录成功！</string>
+    <string name="error_username_format">用户名格式不正确!</string>
+    <string name="error_password_format">密码格式不正确!</string>
+
+    <!--网络相关-->
+    <string name="error_network_unknown_host">找不到服务器,请稍后再试!</string>
+    <string name="error_network_connect">连接失败,请稍后再试!</string>
+    <string name="error_network_timeout">连接超时,请稍后再试!</string>
+    <string name="error_network_not_auth">登录信息过期,请重新登录!</string>
+    <string name="error_network_not_permission">你没有权限访问!</string>
+    <string name="error_network_not_found">你访问的内容不存在!</string>
+    <string name="error_network_server">服务器错误,请稍后再试!</string>
+    <string name="error_network_unknown">未知错误,请稍后再试!</string>
+    <string name="loading">拼命加载中.</string>
+
 </resources>

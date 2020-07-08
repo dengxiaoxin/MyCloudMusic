@@ -5,6 +5,8 @@ import android.content.Intent;
 import com.jacky.mycloudmusic.activity.BaseCommonActivity;
 import com.jacky.mycloudmusic.util.PreferencesUtil;
 
+import java.util.Objects;
+
 public class BaseCommonFragment extends BaseFragment {
     /**
      * 偏好设置工具类
@@ -23,7 +25,7 @@ public class BaseCommonFragment extends BaseFragment {
      */
     protected void startActivityAndFinishThis(Class<?> clazz) {
         startActivity(clazz);
-        getActivity().finish();
+        Objects.requireNonNull(getCurrentActivity()).finish();
     }
 
     /**
@@ -31,9 +33,23 @@ public class BaseCommonFragment extends BaseFragment {
      */
     protected void startActivity(Class<?> clazz){
         //创建Intent
-        Intent intent = new Intent(getActivity(), clazz);
+        Intent intent = new Intent(getCurrentActivity(), clazz);
 
         //启动界面
         startActivity(intent);
+    }
+
+    /**
+     * 启动界面,并告知要添加的Fragment
+     * @param clazz 要启动的界面
+     */
+    protected void startActivity(Class<?> clazz, String fragmentTag) {
+        Intent intent = new Intent(getCurrentActivity(), clazz);
+        intent.putExtra("fragmentTag", fragmentTag);
+        startActivity(intent);
+    }
+
+    protected BaseCommonActivity getCurrentActivity() {
+        return (BaseCommonActivity) getActivity();
     }
 }

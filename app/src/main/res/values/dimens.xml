@@ -2,13 +2,16 @@
 <resources>
     <!--文本大小-->
     <dimen name="text_small">12sp</dimen>
-    <dimen name="text_meddle">14sp</dimen>
+    <dimen name="text_middle">14sp</dimen>
     <dimen name="text_large">18sp</dimen>
 
     <!--常用间隔-->
     <dimen name="margin_small">5dp</dimen>
-    <dimen name="margin_meddle">10dp</dimen>
+    <dimen name="margin_middle">10dp</dimen>
     <dimen name="margin_large">20dp</dimen>
+
+    <!--Activity边距-->
+    <dimen name="activity_padding">16dp</dimen>
 
     <!--按钮相关-->
     <dimen name="button_width_large">130dp</dimen>
@@ -21,7 +24,7 @@
 
     <!--分割线相关-->
     <dimen name="divider_small">1dp</dimen>
-    <dimen name="divider_meddle">10dp</dimen>
+    <dimen name="divider_middle">10dp</dimen>
     <dimen name="divider_comment_reply">2dp</dimen>
 
     <!--指示器相关-->

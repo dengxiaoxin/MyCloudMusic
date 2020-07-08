@@ -1,17 +1,14 @@
 package com.jacky.mycloudmusic.fragment;
 
 import android.os.Bundle;
+import android.view.View;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.jacky.mycloudmusic.R;
+import java.util.Objects;
 
 /**
  * 所有Fragment通用父类
@@ -49,5 +46,12 @@ public class BaseFragment extends Fragment {
         initViews();
         initData();
         initListeners();
+    }
+
+    /**
+     * 引用控件，使得在Fragment里面引用代码更简洁
+     */
+    final <T extends View> T findViewById(@IdRes int id) {
+        return Objects.requireNonNull(getView()).findViewById(id);
     }
 }
