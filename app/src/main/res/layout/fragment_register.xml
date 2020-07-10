@@ -1,13 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_padding"
     tools:context=".fragment.RegisterFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="注册Fragment" />
+    <EditText
+        android:id="@+id/et_nickname"
+        style="@style/EditTextStyle"
+        android:hint="@string/enter_nickname"
+        android:inputType="textPersonName"
+        android:maxLength="10" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/et_phone"
+        style="@style/EditTextStyle"
+        android:hint="@string/enter_phone"
+        android:inputType="phone"
+        android:maxLength="11" />
+
+    <EditText
+        android:id="@+id/et_email"
+        style="@style/EditTextStyle"
+        android:hint="@string/enter_email"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/et_password"
+        style="@style/EditTextStyle"
+        android:hint="@string/enter_password"
+        android:inputType="textPassword"
+        android:maxLength="15" />
+
+    <EditText
+        android:id="@+id/et_confirm_password"
+        style="@style/EditTextStyle"
+        android:hint="@string/enter_confirm_password"
+        android:inputType="textPassword"
+        android:maxLength="15" />
+
+    <Button
+        android:id="@+id/btn_register"
+        style="@style/PrimaryBtn"
+        android:layout_marginTop="@dimen/margin_large"
+        android:text="@string/register" />
+
+    <TextView
+        android:id="@+id/tv_agreement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_large"
+        android:gravity="center"
+        android:text="@string/hint_agreement"
+        android:textColor="@color/light_grey"
+        android:visibility="invisible" />
+</LinearLayout>

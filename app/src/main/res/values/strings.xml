@@ -16,6 +16,19 @@
     <string name="error_username_format">用户名格式不正确!</string>
     <string name="error_password_format">密码格式不正确!</string>
 
+    <string name="enter_nickname">请输入昵称(2~10位)</string>
+    <string name="enter_phone">请输入手机号</string>
+    <string name="enter_email">请输入邮箱</string>
+    <string name="enter_confirm_password">请输入确认密码</string>
+    <string name="error_nickname_format">昵称格式不正确!</string>
+    <string name="error_phone_format">手机号格式不正确!</string>
+    <string name="error_email_format">邮箱格式不正确!</string>
+    <string name="error_confirm_password_format">确认密码格式不正确!</string>
+    <string name="error_confirm_password">两次密码不一致!</string>
+    <string name="register_success">注册成功！</string>
+
+    <string name="hint_agreement">注册就代表同意《用户协议》</string>
+
     <!--网络相关-->
     <string name="error_network_unknown_host">找不到服务器,请稍后再试!</string>
     <string name="error_network_connect">连接失败,请稍后再试!</string>

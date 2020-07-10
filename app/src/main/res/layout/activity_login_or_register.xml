@@ -54,6 +54,7 @@
             android:layout_marginBottom="@dimen/margin_large"
             android:text="@string/other_login_way"
             android:textColor="@color/light_grey"
+            android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@+id/ll_other_login_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -64,6 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_large"
             android:orientation="horizontal"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">

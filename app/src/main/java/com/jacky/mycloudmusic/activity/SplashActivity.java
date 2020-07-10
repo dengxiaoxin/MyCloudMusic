@@ -1,17 +1,11 @@
 package com.jacky.mycloudmusic.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 
+import com.jacky.mycloudmusic.MainActivity;
 import com.jacky.mycloudmusic.R;
 
 public class SplashActivity extends BaseCommonActivity {
@@ -65,7 +59,7 @@ public class SplashActivity extends BaseCommonActivity {
         protected Boolean doInBackground(Integer... integers) {
             int i = integers[0];
 
-            while (i>0){
+            while (i > 0) {
                 //Log.i("================", i + "");
                 publishProgress(i);
                 i--;
@@ -87,11 +81,15 @@ public class SplashActivity extends BaseCommonActivity {
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             //Log.i("================", "startMainActivity");
-            if (sp.isShowGuide()) {
+            if (sp.isShowGuide())
+                //跳转到引导界面
                 startActivityAndFinishThis(GuideActivity.class);
-            } else {
+            else if (sp.isAlreadyLogin())
+                //跳转到首页
+                startActivityAndFinishThis(MainActivity.class);
+            else
+                //跳转到登录注册界面
                 startActivityAndFinishThis(LoginOrRegisterActivity.class);
-            }
         }
 
         @Override

@@ -2,6 +2,7 @@ package com.jacky.mycloudmusic.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 public class PreferencesUtil {
 
@@ -14,6 +15,10 @@ public class PreferencesUtil {
      * 是否显示引导界面key
      */
     private static final String SHOW_GUIDE = "SHOW_GUIDE";
+
+    private static final String USER_ID = "USER_ID";
+
+    private static final String SESSION = "SESSION";
 
     /**
      * 实例
@@ -52,7 +57,7 @@ public class PreferencesUtil {
      * @return 是否显示
      */
     public boolean isShowGuide() {
-        return preferences.getBoolean(SHOW_GUIDE, true);
+        return getBoolean(SHOW_GUIDE, true);
     }
 
     /**
@@ -60,7 +65,66 @@ public class PreferencesUtil {
      * @param value 是否显示
      */
     public void setShowGuide(boolean value) {
-        preferences.edit().putBoolean(SHOW_GUIDE, value).apply();
+        putBoolean(SHOW_GUIDE, value);
     }
+
+    /**
+     * get和set userId、session
+     *
+     * @return
+     */
+    public String getUserId() {
+        return getString(USER_ID, null);
+    }
+
+    public void setUserId(String value) {
+        putString(USER_ID, value);
+    }
+
+    public String getSession() {
+        return getString(SESSION, null);
+    }
+
+    public void setSession(String value) {
+        putString(SESSION, value);
+    }
+
+    /**
+     * 是否已登录
+     */
+    public boolean isAlreadyLogin() {
+        return !TextUtils.isEmpty(getUserId());
+    }
+
+    //辅助方法
+
+    /**
+     * 保存字符串
+     */
+    private void putString(String key, String value) {
+        preferences.edit().putString(key, value).apply();
+    }
+
+    /**
+     * 获取字符串
+     */
+    private String getString(String key, String defaultValue) {
+        return preferences.getString(key, defaultValue);
+    }
+
+    /**
+     * 保存boolean
+     */
+    private void putBoolean(String key, boolean value) {
+        preferences.edit().putBoolean(key, value).apply();
+    }
+
+    /**
+     * 获取boolean
+     */
+    private boolean getBoolean(String key, boolean defaultValue) {
+        return preferences.getBoolean(key, defaultValue);
+    }
+
 
 }

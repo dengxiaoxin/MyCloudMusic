@@ -1,6 +1,9 @@
 package com.jacky.mycloudmusic.networkapi;
 
+import com.jacky.mycloudmusic.domain.BaseModel;
+import com.jacky.mycloudmusic.domain.Session;
 import com.jacky.mycloudmusic.domain.Sheet;
+import com.jacky.mycloudmusic.domain.User;
 import com.jacky.mycloudmusic.domain.response.DetailResponse;
 import com.jacky.mycloudmusic.domain.response.ListResponse;
 import com.jacky.mycloudmusic.util.Constant;
@@ -82,6 +85,26 @@ public class RetrofitAPI {
      */
     public Observable<DetailResponse<Sheet>> requestSheetDetail(String id) {
         return requestAPI.requestSheetDetail(id)
+                //固定写法
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * 登录
+     */
+    public Observable<DetailResponse<Session>> login(User user) {
+        return requestAPI.login(user)
+                //固定写法
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * 注册
+     */
+    public Observable<DetailResponse<BaseModel>> register(User user) {
+        return requestAPI.register(user)
                 //固定写法
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

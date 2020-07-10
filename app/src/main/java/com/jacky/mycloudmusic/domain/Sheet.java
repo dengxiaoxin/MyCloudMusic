@@ -1,17 +1,8 @@
 package com.jacky.mycloudmusic.domain;
 
-public class Sheet {
-    private String id;
+public class Sheet extends BaseModel {
     private String title;
     private String banner;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;

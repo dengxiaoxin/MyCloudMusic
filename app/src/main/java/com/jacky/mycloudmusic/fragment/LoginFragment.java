@@ -10,19 +10,15 @@ import android.widget.EditText;
 import androidx.fragment.app.Fragment;
 
 import com.jacky.mycloudmusic.R;
-import com.jacky.mycloudmusic.domain.Sheet;
-import com.jacky.mycloudmusic.domain.response.DetailResponse;
-import com.jacky.mycloudmusic.listener.HttpObserver;
-import com.jacky.mycloudmusic.networkapi.RetrofitAPI;
-import com.jacky.mycloudmusic.util.LogUtil;
 import com.jacky.mycloudmusic.util.StringUtil;
 import com.jacky.mycloudmusic.util.ToastUtil;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LoginFragment extends BaseCommonFragment implements View.OnClickListener {
+public class LoginFragment extends BaseLoginFragment implements View.OnClickListener {
 
+    private static final String TAG = "======LoginFragment";
     private EditText etUsername;
     private EditText etPassword;
     private Button btnLogin;
@@ -95,21 +91,20 @@ public class LoginFragment extends BaseCommonFragment implements View.OnClickLis
             return;
         }
 
-        ToastUtil.successShortToast(R.string.login_success);
+        //判断是手机号还是邮箱
+        String phone = null;
+        String email = null;
+        if (StringUtil.isPhoneNum(username)) {
+            phone = username;
+        } else {
+            email = username;
+        }
+
+        //请求登录（父类方法）
+        postLogin(phone, email, password);
     }
 
     private void onBtnForgetPasswordClick() {
         ToastUtil.infoShortToast("onBtnForgetPasswordClick");
-
-        RetrofitAPI.getInstance()
-                //发出请求
-                .requestSheetDetail("1")
-                //回调函数
-                .subscribe(new HttpObserver<DetailResponse<Sheet>>(getCurrentActivity(), true) {
-                    @Override
-                    public void onSucceeded(DetailResponse<Sheet> sheetDetailResponse) {
-                        LogUtil.d("========dengxiaoxin", sheetDetailResponse.getData().getTitle());
-                    }
-                });
     }
 }
