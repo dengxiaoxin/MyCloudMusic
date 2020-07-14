@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import com.jacky.mycloudmusic.MainActivity;
 import com.jacky.mycloudmusic.R;
 
 public class SplashActivity extends BaseCommonActivity {
@@ -85,8 +84,8 @@ public class SplashActivity extends BaseCommonActivity {
                 //跳转到引导界面
                 startActivityAndFinishThis(GuideActivity.class);
             else if (sp.isAlreadyLogin())
-                //跳转到首页
-                startActivityAndFinishThis(MainActivity.class);
+                //跳转到广告页，之后再由广告页跳转到首页
+                startActivityAndFinishThis(AdActivity.class);
             else
                 //跳转到登录注册界面
                 startActivityAndFinishThis(LoginOrRegisterActivity.class);

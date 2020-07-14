@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.jacky.mycloudmusic.util.Constant;
 import com.jacky.mycloudmusic.util.PreferencesUtil;
 
 import butterknife.ButterKnife;
@@ -136,7 +137,7 @@ public class BaseCommonActivity extends BaseActivity {
      * 启动界面并关闭当前界面
      * @param clazz 要启动的界面
      */
-    protected void startActivityAndFinishThis(Class<?> clazz) {
+    public void startActivityAndFinishThis(Class<?> clazz) {
         Intent intent = new Intent(getCurrentActivity(), clazz);
         startActivity(intent);
         finish();
@@ -146,7 +147,7 @@ public class BaseCommonActivity extends BaseActivity {
      * 启动界面
      * @param clazz 要启动的界面
      */
-    protected void startActivity(Class<?> clazz) {
+    public void startActivity(Class<?> clazz) {
         Intent intent = new Intent(getCurrentActivity(), clazz);
         startActivity(intent);
     }
@@ -155,13 +156,31 @@ public class BaseCommonActivity extends BaseActivity {
      * 启动界面,并告知要添加的Fragment
      * @param clazz 要启动的界面
      */
-    protected void startActivity(Class<?> clazz, String fragmentTag) {
+    public void startActivityContainFragment(Class<?> clazz, String fragmentTag) {
         Intent intent = new Intent(getCurrentActivity(), clazz);
-        intent.putExtra("fragmentTag", fragmentTag);
+        intent.putExtra(Constant.FRAGMENT_TAG, fragmentTag);
         startActivity(intent);
     }
 
-    protected BaseCommonActivity getCurrentActivity() {
+    /**
+     * 启动包含WebView的界面
+     *
+     * @param clazz 要启动的界面
+     * @param title ToolBar标题
+     * @param url   网址链接
+     */
+    public void startActivityContainWebView(Class<?> clazz, String title, String url) {
+        Intent intent = new Intent(getCurrentActivity(), clazz);
+        intent.putExtra(Constant.FRAGMENT_TAG, Constant.WEB_VIEW_FRAGMENT);
+        //添加标题
+        intent.putExtra(Constant.TITLE, title);
+        //添加url
+        intent.putExtra(Constant.URL, url);
+
+        startActivity(intent);
+    }
+
+    public BaseCommonActivity getCurrentActivity() {
         return this;
     }
 

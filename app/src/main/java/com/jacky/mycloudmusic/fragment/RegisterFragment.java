@@ -6,15 +6,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.jacky.mycloudmusic.R;
+import com.jacky.mycloudmusic.activity.CommonToolbarActivity;
 import com.jacky.mycloudmusic.domain.BaseModel;
 import com.jacky.mycloudmusic.domain.User;
 import com.jacky.mycloudmusic.domain.response.DetailResponse;
 import com.jacky.mycloudmusic.listener.HttpObserver;
 import com.jacky.mycloudmusic.networkapi.RetrofitAPI;
+import com.jacky.mycloudmusic.util.Constant;
 import com.jacky.mycloudmusic.util.LogUtil;
 import com.jacky.mycloudmusic.util.StringUtil;
 import com.jacky.mycloudmusic.util.ToastUtil;
@@ -31,6 +34,7 @@ public class RegisterFragment extends BaseLoginFragment implements View.OnClickL
     private EditText etPassword;
     private EditText etConfirmPassword;
     private Button btnRegister;
+    private TextView tvAgreement;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -54,6 +58,7 @@ public class RegisterFragment extends BaseLoginFragment implements View.OnClickL
         etPassword = findViewById(R.id.et_password);
         etConfirmPassword = findViewById(R.id.et_confirm_password);
         btnRegister = findViewById(R.id.btn_register);
+        tvAgreement = findViewById(R.id.tv_agreement);
     }
 
     @Override
@@ -61,6 +66,7 @@ public class RegisterFragment extends BaseLoginFragment implements View.OnClickL
         super.initListeners();
 
         btnRegister.setOnClickListener(this);
+        tvAgreement.setOnClickListener(this);
     }
 
     @Override
@@ -68,6 +74,9 @@ public class RegisterFragment extends BaseLoginFragment implements View.OnClickL
         switch (v.getId()) {
             case R.id.btn_register:
                 onBtnRegisterClick();
+                break;
+            case R.id.tv_agreement:
+                onAgreementClick();
                 break;
             default:
                 break;
@@ -158,5 +167,10 @@ public class RegisterFragment extends BaseLoginFragment implements View.OnClickL
                         postLogin(phone, email, password);
                     }
                 });
+    }
+
+    private void onAgreementClick() {
+        //使用了一个小米用户协议做样子
+        startActivityContainWebView(CommonToolbarActivity.class, Constant.TITLE_USER_AGREEMENT, "http://www.miui.com/res/doc/eula/cn.html");
     }
 }

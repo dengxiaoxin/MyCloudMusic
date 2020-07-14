@@ -1,11 +1,7 @@
 package com.jacky.mycloudmusic.fragment;
 
-import android.content.Intent;
-
 import com.jacky.mycloudmusic.activity.BaseCommonActivity;
 import com.jacky.mycloudmusic.util.PreferencesUtil;
-
-import java.util.Objects;
 
 public class BaseCommonFragment extends BaseFragment {
     /**
@@ -23,33 +19,37 @@ public class BaseCommonFragment extends BaseFragment {
     /**
      * 启动界面并关闭当前界面
      */
-    protected void startActivityAndFinishThis(Class<?> clazz) {
-        startActivity(clazz);
-        Objects.requireNonNull(getCurrentActivity()).finish();
+    public void startActivityAndFinishThis(Class<?> clazz) {
+        getCurrentActivity().startActivityAndFinishThis(clazz);
     }
 
     /**
      * 启动界面
      */
-    protected void startActivity(Class<?> clazz){
-        //创建Intent
-        Intent intent = new Intent(getCurrentActivity(), clazz);
-
-        //启动界面
-        startActivity(intent);
+    public void startActivity(Class<?> clazz) {
+        getCurrentActivity().startActivity(clazz);
     }
 
     /**
      * 启动界面,并告知要添加的Fragment
      * @param clazz 要启动的界面
      */
-    protected void startActivity(Class<?> clazz, String fragmentTag) {
-        Intent intent = new Intent(getCurrentActivity(), clazz);
-        intent.putExtra("fragmentTag", fragmentTag);
-        startActivity(intent);
+    public void startActivityContainFragment(Class<?> clazz, String fragmentTag) {
+        getCurrentActivity().startActivityContainFragment(clazz, fragmentTag);
     }
 
-    protected BaseCommonActivity getCurrentActivity() {
+    /**
+     * 启动包含WebView的界面
+     *
+     * @param clazz 要启动的界面
+     * @param title ToolBar标题
+     * @param url   网址链接
+     */
+    public void startActivityContainWebView(Class<?> clazz, String title, String url) {
+        getCurrentActivity().startActivityContainWebView(clazz, title, url);
+    }
+
+    public BaseCommonActivity getCurrentActivity() {
         return (BaseCommonActivity) getActivity();
     }
 }

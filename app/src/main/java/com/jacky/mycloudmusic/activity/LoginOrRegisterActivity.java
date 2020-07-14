@@ -47,12 +47,12 @@ public class LoginOrRegisterActivity extends BaseCommonActivity {
 
     @OnClick(R.id.btn_login)
     void onBtnLoginClick() {
-        startActivity(Toolbar1Activity.class, Constant.LOGIN_FRAGMENT);
+        startActivityContainFragment(CommonToolbarActivity.class, Constant.LOGIN_FRAGMENT);
     }
 
     @OnClick(R.id.btn_register)
     void onBtnRegisterClick() {
-        startActivity(Toolbar1Activity.class, Constant.REGISTER_FRAGMENT);
+        startActivityContainFragment(CommonToolbarActivity.class, Constant.REGISTER_FRAGMENT);
     }
 
     /**

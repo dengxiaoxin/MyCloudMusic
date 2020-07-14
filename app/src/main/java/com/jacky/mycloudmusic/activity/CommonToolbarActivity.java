@@ -1,24 +1,23 @@
 package com.jacky.mycloudmusic.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-
 import com.jacky.mycloudmusic.R;
 import com.jacky.mycloudmusic.fragment.LoginFragment;
 import com.jacky.mycloudmusic.fragment.RegisterFragment;
+import com.jacky.mycloudmusic.fragment.WebViewFragment;
 import com.jacky.mycloudmusic.util.Constant;
-import com.jacky.mycloudmusic.util.LogUtil;
 
 import butterknife.BindView;
 
-public class Toolbar1Activity extends BaseCommonActivity {
+public class CommonToolbarActivity extends BaseCommonActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -26,7 +25,7 @@ public class Toolbar1Activity extends BaseCommonActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_toolbar1);
+        setContentView(R.layout.activity_common_toolbar);
     }
 
     @Override
@@ -38,17 +37,23 @@ public class Toolbar1Activity extends BaseCommonActivity {
         changeStatusIconColor(false);
 
         Intent intent = this.getIntent();
-        String fragmentTag = intent.getStringExtra("fragmentTag");
+        String fragmentTag = intent.getStringExtra(Constant.FRAGMENT_TAG);
         Fragment fragment = null;
         assert fragmentTag != null;
         switch (fragmentTag) {
             case Constant.LOGIN_FRAGMENT:
-                toolbar.setTitle(Constant.LOGIN_FRAGMENT_TITLE);
+                toolbar.setTitle(Constant.TITLE_LOGIN);
                 fragment = new LoginFragment();
                 break;
             case Constant.REGISTER_FRAGMENT:
-                toolbar.setTitle(Constant.REGISTER_FRAGMENT_TITLE);
+                toolbar.setTitle(Constant.TITLE_REGISTER);
                 fragment = new RegisterFragment();
+                break;
+            case Constant.WEB_VIEW_FRAGMENT:
+                String title = intent.getStringExtra(Constant.TITLE);
+                String url = intent.getStringExtra(Constant.URL);
+                toolbar.setTitle(title);
+                fragment = new WebViewFragment(url);
                 break;
             default:
                 break;
@@ -57,7 +62,7 @@ public class Toolbar1Activity extends BaseCommonActivity {
         if (fragment != null) {
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction trans = manager.beginTransaction();
-            trans.replace(R.id.ll_fragment_container1, fragment);
+            trans.replace(R.id.ll_fragment_container, fragment);
             trans.commit();
         }
     }

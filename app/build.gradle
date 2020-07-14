@@ -79,6 +79,11 @@ dependencies {
     //绑定方法
     //https://github.com/JakeWharton/butterknife
     implementation 'com.jakewharton:butterknife:10.2.1'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
+    implementation 'androidx.navigation:navigation-fragment:2.2.2'
+    implementation 'androidx.navigation:navigation-ui:2.2.2'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
 
     //toast工具类

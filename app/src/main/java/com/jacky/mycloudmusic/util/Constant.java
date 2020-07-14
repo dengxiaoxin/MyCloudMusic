@@ -10,13 +10,24 @@ public class Constant {
 
     public static final String GUIDE_IMAGE_ID = "GUIDE_IMAGE_ID";
 
+    //Intent Key
+    public static final String FRAGMENT_TAG = "FRAGMENT_TAG";
+    public static final String TITLE = "TITLE";
+    public static final String URL = "URL";
+
+    //Intent Action
+    public static final String ACTION_AD = "com.jacky.mycloudmusic.ACTION_AD";
+
     //fragmentTag
     public static final String LOGIN_FRAGMENT = "LOGIN_FRAGMENT";
     public static final String REGISTER_FRAGMENT = "REGISTER_FRAGMENT";
+    public static final String WEB_VIEW_FRAGMENT = "WEB_VIEW_FRAGMENT";
 
     //fragmentTitle
-    public static final String LOGIN_FRAGMENT_TITLE = "登录";
-    public static final String REGISTER_FRAGMENT_TITLE = "注册";
+    public static final String TITLE_LOGIN = "登录";
+    public static final String TITLE_REGISTER = "注册";
+    public static final String TITLE_ACTIVITY_DETAIL = "活动详情";
+    public static final String TITLE_USER_AGREEMENT = "用户协议";
 
     /**
      * 手机号正则表达式

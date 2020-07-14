@@ -8,8 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import java.util.Objects;
-
 /**
  * 所有Fragment通用父类
  */
@@ -52,6 +50,6 @@ public class BaseFragment extends Fragment {
      * 引用控件，使得在Fragment里面引用代码更简洁
      */
     final <T extends View> T findViewById(@IdRes int id) {
-        return Objects.requireNonNull(getView()).findViewById(id);
+        return requireView().findViewById(id);
     }
 }
