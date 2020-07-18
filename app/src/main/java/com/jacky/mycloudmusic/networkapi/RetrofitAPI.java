@@ -1,5 +1,7 @@
 package com.jacky.mycloudmusic.networkapi;
 
+import android.text.TextUtils;
+
 import com.jacky.mycloudmusic.domain.BaseModel;
 import com.jacky.mycloudmusic.domain.Session;
 import com.jacky.mycloudmusic.domain.Sheet;
@@ -8,6 +10,8 @@ import com.jacky.mycloudmusic.domain.response.DetailResponse;
 import com.jacky.mycloudmusic.domain.response.ListResponse;
 import com.jacky.mycloudmusic.util.Constant;
 import com.jacky.mycloudmusic.util.LogUtil;
+
+import java.util.HashMap;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -108,5 +112,32 @@ public class RetrofitAPI {
                 //固定写法
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * 用户详情
+     * 参数id和nickname
+     */
+    public Observable<DetailResponse<User>> userDetail(String id, String nickname) {
+
+        //添加查询参数
+        HashMap<String, String> data = new HashMap<>();
+
+        if (!TextUtils.isEmpty(nickname)) {
+            //如果昵称不为空才添加
+            data.put(Constant.NICKNAME, nickname);
+        }
+
+        return requestAPI.userDetail(id, data)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * 用户详情
+     * 参数只有id
+     */
+    public Observable<DetailResponse<User>> userDetail(String id) {
+        return userDetail(id, null);
     }
 }

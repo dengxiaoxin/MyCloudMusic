@@ -40,7 +40,10 @@ android {
         //开发环境
         dev {
             //API端点:服务器接口地址
-            buildConfigField('String', "ENDPOINT", '"http://dev-my-cloud-music-api-rails.ixuea.com/"')
+            buildConfigField 'String', "ENDPOINT", '"http://dev-my-cloud-music-api-rails.ixuea.com/"'
+
+            //资源端点
+            buildConfigField 'String', "RESOURCE_ENDPOINT", '"http://dev-courses-misuc.ixuea.com/%s"'
 
             dimension = minSdkVersion
         }
@@ -49,6 +52,9 @@ android {
         prod {
             //API端点:服务器接口地址
             buildConfigField 'String', 'ENDPOINT', '"http://api-courses-misuc.ixuea.com/"'
+
+            //资源端点
+            buildConfigField 'String', "RESOURCE_ENDPOINT", '"http://courses-misuc.ixuea.com/%s"'
 
             dimension = minSdkVersion
         }
@@ -74,6 +80,9 @@ dependencies {
     //圆形指示器
     //https://github.com/ongakuer/CircleIndicator
     implementation 'me.relex:circleindicator:2.1.4'
+    //MagicIndicator
+    //https://github.com/hackware1993/MagicIndicator
+    implementation 'com.github.hackware1993:MagicIndicator:1.6.0'
 
     //提供通过注解的方式引用控件
     //绑定方法
@@ -126,6 +135,11 @@ dependencies {
     //跨界面通信框架
     //https://github.com/greenrobot/EventBus
     implementation 'org.greenrobot:eventbus:3.2.0'
+
+    //图片加载框架Glide
+    //https://github.com/bumptech/glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
     //Java测试依赖
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

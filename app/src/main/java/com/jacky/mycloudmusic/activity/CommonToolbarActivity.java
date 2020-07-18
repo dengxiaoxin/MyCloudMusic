@@ -42,11 +42,11 @@ public class CommonToolbarActivity extends BaseCommonActivity {
         assert fragmentTag != null;
         switch (fragmentTag) {
             case Constant.LOGIN_FRAGMENT:
-                toolbar.setTitle(Constant.TITLE_LOGIN);
+                toolbar.setTitle(R.string.title_login);
                 fragment = new LoginFragment();
                 break;
             case Constant.REGISTER_FRAGMENT:
-                toolbar.setTitle(Constant.TITLE_REGISTER);
+                toolbar.setTitle(R.string.title_register);
                 fragment = new RegisterFragment();
                 break;
             case Constant.WEB_VIEW_FRAGMENT:

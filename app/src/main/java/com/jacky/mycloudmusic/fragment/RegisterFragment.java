@@ -17,7 +17,6 @@ import com.jacky.mycloudmusic.domain.User;
 import com.jacky.mycloudmusic.domain.response.DetailResponse;
 import com.jacky.mycloudmusic.listener.HttpObserver;
 import com.jacky.mycloudmusic.networkapi.RetrofitAPI;
-import com.jacky.mycloudmusic.util.Constant;
 import com.jacky.mycloudmusic.util.LogUtil;
 import com.jacky.mycloudmusic.util.StringUtil;
 import com.jacky.mycloudmusic.util.ToastUtil;
@@ -171,6 +170,6 @@ public class RegisterFragment extends BaseLoginFragment implements View.OnClickL
 
     private void onAgreementClick() {
         //使用了一个小米用户协议做样子
-        startActivityContainWebView(CommonToolbarActivity.class, Constant.TITLE_USER_AGREEMENT, "http://www.miui.com/res/doc/eula/cn.html");
+        startActivityContainWebView(CommonToolbarActivity.class, getString(R.string.title_user_agreement), "http://www.miui.com/res/doc/eula/cn.html");
     }
 }

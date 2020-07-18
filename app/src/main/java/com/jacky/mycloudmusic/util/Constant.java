@@ -4,11 +4,18 @@ import com.jacky.mycloudmusic.BuildConfig;
 
 public class Constant {
     /**
-     * 端点
+     * 服务器API端点
      */
     public static final String ENDPOINT = BuildConfig.ENDPOINT;
 
+    /**
+     * 资源端点
+     */
+    public static final String RESOURCE_ENDPOINT = BuildConfig.RESOURCE_ENDPOINT;
+
+    //Key
     public static final String GUIDE_IMAGE_ID = "GUIDE_IMAGE_ID";
+    public static final String NICKNAME = "NICKNAME";
 
     //Intent Key
     public static final String FRAGMENT_TAG = "FRAGMENT_TAG";
@@ -23,12 +30,6 @@ public class Constant {
     public static final String REGISTER_FRAGMENT = "REGISTER_FRAGMENT";
     public static final String WEB_VIEW_FRAGMENT = "WEB_VIEW_FRAGMENT";
 
-    //fragmentTitle
-    public static final String TITLE_LOGIN = "登录";
-    public static final String TITLE_REGISTER = "注册";
-    public static final String TITLE_ACTIVITY_DETAIL = "活动详情";
-    public static final String TITLE_USER_AGREEMENT = "用户协议";
-
     /**
      * 手机号正则表达式
      * 移动：134 135 136 137 138 139 147 150 151 152 157 158 159 178 182 183 184 187 188 198
@@ -42,4 +43,5 @@ public class Constant {
      * 邮箱正则表达式
      */
     public static final String REGEX_EMAIL = "^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$";
+
 }

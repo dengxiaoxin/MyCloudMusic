@@ -96,6 +96,14 @@ public class PreferencesUtil {
         return !TextUtils.isEmpty(getUserId());
     }
 
+    /**
+     * 退出
+     */
+    public void logout() {
+        delete(USER_ID);
+        delete(SESSION);
+    }
+
     //辅助方法
 
     /**
@@ -126,5 +134,11 @@ public class PreferencesUtil {
         return preferences.getBoolean(key, defaultValue);
     }
 
+    /**
+     * 删除内容
+     */
+    private void delete(String key) {
+        preferences.edit().remove(key).apply();
+    }
 
 }

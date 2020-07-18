@@ -7,11 +7,14 @@ import com.jacky.mycloudmusic.domain.User;
 import com.jacky.mycloudmusic.domain.response.DetailResponse;
 import com.jacky.mycloudmusic.domain.response.ListResponse;
 
+import java.util.Map;
+
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.QueryMap;
 
 public interface RequestAPI {
 
@@ -38,4 +41,10 @@ public interface RequestAPI {
      */
     @POST("v1/users")
     Observable<DetailResponse<BaseModel>> register(@Body User user);
+
+    /**
+     * 用户详情
+     */
+    @GET("v1/users/{id}")
+    Observable<DetailResponse<User>> userDetail(@Path("id") String id, @QueryMap Map<String, String> data);
 }

@@ -8,11 +8,20 @@
     <color name="white">@android:color/white</color>
     <color name="black">@android:color/black</color>
 
+    <!--透明颜色-->
+    <color name="transparent">@android:color/transparent</color>
+
     <!--亮一点的灰色-->
     <color name="light_grey">#aaaaaa</color>
+    <color name="text">#333</color>
 
     <!--全局背景-->
     <color name="background_color">@color/white</color>
 
     <color name="black_overlay">#66000000</color>
+
+    <!--首页按钮未选中颜色
+    argb
+    a：透明度；ff:完全不透明-->
+    <color name="tab_normal">#aaffffff</color>
 </resources>
