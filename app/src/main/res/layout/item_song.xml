@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/margin_middle"
+    android:layout_marginVertical="@dimen/margin_small"
+    android:orientation="horizontal">
+
+    <!--封面容器-->
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="@dimen/radius_small"
+        app:cardElevation="0dp">
+
+        <!--封面-->
+        <ImageView
+            android:id="@+id/iv_banner"
+            android:layout_width="@dimen/song_banner_width"
+            android:layout_height="@dimen/song_banner_width"
+            android:scaleType="centerCrop"
+            android:src="@drawable/placeholder" />
+    </androidx.cardview.widget.CardView>
+
+    <!--右侧容器-->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/margin_middle"
+        android:layout_marginVertical="@dimen/margin_small"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/margin_middle">
+
+        <!--标题-->
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="这是歌曲名称"
+            android:textColor="@color/text" />
+
+        <!--点击数容器-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small">
+            <!--图标-->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_phone" />
+
+            <!--点击数-->
+            <TextView
+                android:id="@+id/tv_clicks_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="28万"
+                android:textColor="@color/light_grey"
+                android:textSize="@dimen/text_small" />
+        </LinearLayout>
+
+        <!--分割线容器-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+            <!--分割线-->
+            <include layout="@layout/divider_small" />
+        </LinearLayout>
+
+        <!--歌手容器-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <!--头像-->
+            <ImageView
+                android:id="@+id/iv_avatar"
+                android:layout_width="@dimen/avatar_width_small"
+                android:layout_height="@dimen/avatar_width_small"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_avatar_circle" />
+
+            <!--昵称-->
+            <TextView
+                android:id="@+id/tv_singer_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_small"
+                android:text="这是歌手"
+                android:textColor="@color/light_grey"
+                android:layout_marginStart="@dimen/margin_small" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

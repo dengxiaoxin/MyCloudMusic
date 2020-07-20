@@ -3,6 +3,8 @@
     package="com.jacky.mycloudmusic">
     <!-- http网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 读存取卡权限-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".AppContext"
@@ -12,8 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".activity.AdActivity" /> <!-- http网络权限配置2 -->
+        android:usesCleartextTraffic="true"><!-- http网络权限配置2 -->
+        <activity android:name=".activity.AdActivity" />
         <activity android:name=".activity.CommonToolbarActivity" />
         <activity android:name=".activity.LoginOrRegisterActivity" />
         <activity android:name=".activity.GuideActivity" />

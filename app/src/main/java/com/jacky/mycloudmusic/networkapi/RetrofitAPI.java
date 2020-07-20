@@ -2,9 +2,11 @@ package com.jacky.mycloudmusic.networkapi;
 
 import android.text.TextUtils;
 
+import com.jacky.mycloudmusic.domain.Ad;
 import com.jacky.mycloudmusic.domain.BaseModel;
 import com.jacky.mycloudmusic.domain.Session;
 import com.jacky.mycloudmusic.domain.Sheet;
+import com.jacky.mycloudmusic.domain.Song;
 import com.jacky.mycloudmusic.domain.User;
 import com.jacky.mycloudmusic.domain.response.DetailResponse;
 import com.jacky.mycloudmusic.domain.response.ListResponse;
@@ -139,5 +141,25 @@ public class RetrofitAPI {
      */
     public Observable<DetailResponse<User>> userDetail(String id) {
         return userDetail(id, null);
+    }
+
+    /**
+     * 单曲
+     */
+    public Observable<ListResponse<Song>> songs() {
+        return requestAPI.songs()
+                //固定写法
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * 主界面广告列表
+     */
+    public Observable<ListResponse<Ad>> ads() {
+        return requestAPI.ads()
+                //固定写法
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }

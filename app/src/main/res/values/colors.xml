@@ -24,4 +24,7 @@
     argb
     a：透明度；ff:完全不透明-->
     <color name="tab_normal">#aaffffff</color>
+
+    <!--分割线颜色-->
+    <color name="divider_color">#e7e9e9</color>
 </resources>

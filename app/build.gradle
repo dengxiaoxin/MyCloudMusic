@@ -84,6 +84,10 @@ dependencies {
     //https://github.com/hackware1993/MagicIndicator
     implementation 'com.github.hackware1993:MagicIndicator:1.6.0'
 
+    //轮播图
+    //https://github.com/youth5201314/banner
+    implementation 'com.youth.banner:banner:1.4.10'
+
     //提供通过注解的方式引用控件
     //绑定方法
     //https://github.com/JakeWharton/butterknife
@@ -100,6 +104,7 @@ dependencies {
     implementation 'com.github.GrenderG:Toasty:1.4.2'
 
     //MultiDex
+    //Java/Kotlin文件编译后可以生成多个dex文件
     implementation "androidx.multidex:multidex:2.0.1"
 
     //========请求网络相关========
@@ -140,6 +145,11 @@ dependencies {
     //https://github.com/bumptech/glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+    //封装了RecyclerView
+    //提供更高层次的接口
+    //https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
 
     //Java测试依赖
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

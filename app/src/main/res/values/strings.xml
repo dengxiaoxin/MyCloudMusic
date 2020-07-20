@@ -53,9 +53,16 @@
     <string name="title_register">注册</string>
     <string name="title_activity_detail">活动详情</string>
     <string name="title_user_agreement">用户协议</string>
+    <!--主界面title-->
     <string name="title_mine">我的</string>
     <string name="title_discovery">发现</string>
     <string name="title_friend">朋友</string>
     <string name="title_video">视频</string>
+
+    <!--主界面相关-->
+    <string name="person_fm">私人FM</string>
+    <string name="rank">排行榜</string>
+    <string name="day_recommend">每日推荐</string>
+    <string name="sheet">歌单</string>
 
 </resources>

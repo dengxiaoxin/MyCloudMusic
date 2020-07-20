@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/margin_middle"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <com.jacky.mycloudmusic.view.SquareLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardCornerRadius="@dimen/radius_small"
+            app:cardElevation="0dp">
+
+            <!--封面-->
+            <ImageView
+                android:id="@+id/iv_banner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/placeholder" />
+
+            <!--点击数容器-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_small">
+
+                <!--点击数Icon-->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_headset" />
+
+                <!--点击数文本-->
+                <TextView
+                    android:id="@+id/tv_clicks_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_marginLeft="@dimen/margin_small"
+                    android:text="28万"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_small" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </com.jacky.mycloudmusic.view.SquareLinearLayout>
+
+    <!--标题-->
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/margin_middle"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="@dimen/line_spacing_multiplier"
+        android:lines="2"
+        android:text="这是歌单标题这是歌单标题这是歌单标题这是歌单标题这是歌单标题这是歌单标题这是歌单标题这是歌单标题这是歌单标题这是歌单标题这是歌单标题这是歌单标题这是歌单标题"
+        android:textColor="@color/text" />
+</LinearLayout>

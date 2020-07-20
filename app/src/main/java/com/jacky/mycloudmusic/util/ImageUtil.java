@@ -69,19 +69,28 @@ public class ImageUtil {
      * @param uri 绝对路径、相对路径都可传
      */
     public static void showCircle(Activity activity, ImageView view, String uri) {
-        //处理uri
-        //是相对路径则转换为绝对路径
-        if (!uri.startsWith("http"))
-            uri = String.format(Constant.RESOURCE_ENDPOINT, uri);
-
         //获取圆形通用的配置
         RequestOptions options = getCircleCommonRequestOptions();
 
-        //显示图片
-        Glide.with(activity)
-                .load(uri)
-                .apply(options)
-                .into(view);
+        if (TextUtils.isEmpty(uri)) {
+            //没有值
+            //显示默认图片
+            Glide.with(activity)
+                    .load(R.drawable.placeholder)
+                    .apply(options)
+                    .into(view);
+        } else {
+            //处理uri
+            //是相对路径则转换为绝对路径
+            if (!uri.startsWith("http"))
+                uri = String.format(Constant.RESOURCE_ENDPOINT, uri);
+
+            //显示图片
+            Glide.with(activity)
+                    .load(uri)
+                    .apply(options)
+                    .into(view);
+        }
     }
 
     /**
@@ -120,19 +129,28 @@ public class ImageUtil {
      * @param uri 绝对路径、相对路径都可传
      */
     public static void show(Activity activity, ImageView view, String uri) {
-        //处理uri
-        //是相对路径则转换为绝对路径
-        if (!uri.startsWith("http"))
-            uri = String.format(Constant.RESOURCE_ENDPOINT, uri);
-
         //获取功能配置
         RequestOptions options = getCommonRequestOptions();
 
-        //显示图片
-        Glide.with(activity)
-                .load(uri)
-                .apply(options)
-                .into(view);
+        if (TextUtils.isEmpty(uri)) {
+            //没有值
+            //显示默认图片
+            Glide.with(activity)
+                    .load(R.drawable.placeholder)
+                    .apply(options)
+                    .into(view);
+        } else {
+            //处理uri
+            //是相对路径则转换为绝对路径
+            if (!uri.startsWith("http"))
+                uri = String.format(Constant.RESOURCE_ENDPOINT, uri);
+
+            //显示图片
+            Glide.with(activity)
+                    .load(uri)
+                    .apply(options)
+                    .into(view);
+        }
     }
 
     /**

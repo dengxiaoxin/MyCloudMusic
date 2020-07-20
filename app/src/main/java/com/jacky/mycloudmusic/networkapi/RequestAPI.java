@@ -1,8 +1,10 @@
 package com.jacky.mycloudmusic.networkapi;
 
+import com.jacky.mycloudmusic.domain.Ad;
 import com.jacky.mycloudmusic.domain.BaseModel;
 import com.jacky.mycloudmusic.domain.Session;
 import com.jacky.mycloudmusic.domain.Sheet;
+import com.jacky.mycloudmusic.domain.Song;
 import com.jacky.mycloudmusic.domain.User;
 import com.jacky.mycloudmusic.domain.response.DetailResponse;
 import com.jacky.mycloudmusic.domain.response.ListResponse;
@@ -47,4 +49,16 @@ public interface RequestAPI {
      */
     @GET("v1/users/{id}")
     Observable<DetailResponse<User>> userDetail(@Path("id") String id, @QueryMap Map<String, String> data);
+
+    /**
+     * 单曲
+     */
+    @GET("v1/songs")
+    Observable<ListResponse<Song>> songs();
+
+    /**
+     * 主界面广告列表
+     */
+    @GET("v1/ads")
+    Observable<ListResponse<Ad>> ads();
 }

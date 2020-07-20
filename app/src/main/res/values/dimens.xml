@@ -36,4 +36,26 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <!--发现界面相关-->
+
+    <!--Item高度-->
+    <dimen name="title_height">50dp</dimen>
+    <dimen name="title_height_small">30dp</dimen>
+    <dimen name="song_banner_width">90dp</dimen>
+
+    <!--发现界面头部背景高度-->
+    <dimen name="discovery_header_background_height">100dp</dimen>
+
+    <!--发现界面banner高度-->
+    <dimen name="banner_height">130dp</dimen>
+    <dimen name="banner_height_small">35dp</dimen>
+
+    <!--行间距-->
+    <item name="line_spacing_multiplier" type="dimen" format="float">1.2</item>
+
+    <!--用户头像相关-->
+    <dimen name="avatar_width_small">25dp</dimen>
+    <dimen name="avatar_width_middle">40dp</dimen>
+    <dimen name="avatar_width_middle2">50dp</dimen>
+    <dimen name="avatar_width">80dp</dimen>
 </resources>

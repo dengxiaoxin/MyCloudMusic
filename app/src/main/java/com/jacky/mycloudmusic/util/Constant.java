@@ -44,4 +44,19 @@ public class Constant {
      */
     public static final String REGEX_EMAIL = "^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$";
 
+    //RecyclerView的ItemType
+    /**
+     * 标题
+     */
+    public static final int TYPE_TITLE = 0;
+
+    /**
+     * 歌单
+     */
+    public static final int TYPE_SHEET = 1;
+
+    /**
+     * 歌曲
+     */
+    public static final int TYPE_SONG = 2;
 }

@@ -3,7 +3,7 @@ package com.jacky.mycloudmusic.domain;
 import java.io.Serializable;
 
 /**
- * 所有模型父类
+ * 所有数据模型父类
  */
 public class BaseModel implements Serializable {
     /**

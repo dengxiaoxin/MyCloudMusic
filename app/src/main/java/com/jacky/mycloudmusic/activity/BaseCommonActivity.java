@@ -24,8 +24,7 @@ public class BaseCommonActivity extends BaseActivity {
     protected void initViews() {
         super.initViews();
 
-        //初始化注解引用控件
-        //绑定方法框架
+        //初始化ButterKnife框架
         if (isBindView()) {
             bindView();
         }

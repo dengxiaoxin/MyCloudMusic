@@ -3,11 +3,23 @@ package com.jacky.mycloudmusic.fragment;
 import com.jacky.mycloudmusic.activity.BaseCommonActivity;
 import com.jacky.mycloudmusic.util.PreferencesUtil;
 
+import butterknife.ButterKnife;
+
 public class BaseCommonFragment extends BaseFragment {
     /**
      * 偏好设置工具类
      */
     protected PreferencesUtil sp;
+
+    @Override
+    protected void initViews() {
+        super.initViews();
+
+        //初始化ButterKnife框架
+        if (isBindView()) {
+            bindView();
+        }
+    }
 
     @Override
     protected void initData() {
@@ -51,5 +63,19 @@ public class BaseCommonFragment extends BaseFragment {
 
     public BaseCommonActivity getCurrentActivity() {
         return (BaseCommonActivity) getActivity();
+    }
+
+    /**
+     * 是否绑定View
+     */
+    protected boolean isBindView() {
+        return true;
+    }
+
+    /**
+     * 绑定View
+     */
+    protected void bindView() {
+        ButterKnife.bind(this, requireView());
     }
 }
