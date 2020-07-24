@@ -21,6 +21,7 @@ public class Constant {
     public static final String FRAGMENT_TAG = "FRAGMENT_TAG";
     public static final String TITLE = "TITLE";
     public static final String URL = "URL";
+    public static final String SHEET_ID = "SHEET_ID";
 
     //Intent Action
     public static final String ACTION_AD = "com.jacky.mycloudmusic.ACTION_AD";
@@ -29,6 +30,7 @@ public class Constant {
     public static final String LOGIN_FRAGMENT = "LOGIN_FRAGMENT";
     public static final String REGISTER_FRAGMENT = "REGISTER_FRAGMENT";
     public static final String WEB_VIEW_FRAGMENT = "WEB_VIEW_FRAGMENT";
+    public static final String SHEET_DETAIL_FRAGMENT = "SHEET_DETAIL_FRAGMENT";
 
     /**
      * 手机号正则表达式

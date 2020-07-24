@@ -1,5 +1,6 @@
 package com.jacky.mycloudmusic.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jacky.mycloudmusic.R;
 import com.jacky.mycloudmusic.activity.CommonToolbarActivity;
 import com.jacky.mycloudmusic.adapter.DiscoveryAdapter;
@@ -21,6 +23,7 @@ import com.jacky.mycloudmusic.domain.Title;
 import com.jacky.mycloudmusic.domain.response.ListResponse;
 import com.jacky.mycloudmusic.listener.HttpObserver;
 import com.jacky.mycloudmusic.networkapi.RetrofitAPI;
+import com.jacky.mycloudmusic.util.Constant;
 import com.jacky.mycloudmusic.util.GlideImageLoader;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
@@ -112,6 +115,28 @@ public class DiscoveryFragment extends BaseCommonFragment implements OnBannerLis
 
         //请求轮播图数据
         fetchBannerData();
+    }
+
+    @Override
+    protected void initListeners() {
+        super.initListeners();
+
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Object data = adapter.getItem(position);
+                if (data instanceof Song) {
+                    //单曲
+                } else if (data instanceof Sheet) {
+                    //歌单
+                    Sheet sheet = (Sheet) data;
+                    Intent intent = new Intent(getCurrentActivity(), CommonToolbarActivity.class);
+                    intent.putExtra(Constant.FRAGMENT_TAG, Constant.SHEET_DETAIL_FRAGMENT);
+                    intent.putExtra(Constant.SHEET_ID, sheet.getId());
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     /**

@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.jacky.mycloudmusic.R;
 import com.jacky.mycloudmusic.fragment.LoginFragment;
 import com.jacky.mycloudmusic.fragment.RegisterFragment;
+import com.jacky.mycloudmusic.fragment.SheetDetailFragment;
 import com.jacky.mycloudmusic.fragment.WebViewFragment;
 import com.jacky.mycloudmusic.util.Constant;
 
@@ -54,6 +55,11 @@ public class CommonToolbarActivity extends BaseCommonActivity {
                 String url = intent.getStringExtra(Constant.URL);
                 toolbar.setTitle(title);
                 fragment = new WebViewFragment(url);
+                break;
+            case Constant.SHEET_DETAIL_FRAGMENT:
+                toolbar.setTitle(R.string.sheet_detail);
+                String sheetId = intent.getStringExtra(Constant.SHEET_ID);
+                fragment = SheetDetailFragment.newInstance(sheetId);
                 break;
             default:
                 break;

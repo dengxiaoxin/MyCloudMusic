@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">星星云音乐</string>
+    <string name="app_name">我的云音乐</string>
 
     <string name="copyright">Copyright © 2019 Ixuea. All Rights Reserved</string>
 
@@ -58,11 +58,28 @@
     <string name="title_discovery">发现</string>
     <string name="title_friend">朋友</string>
     <string name="title_video">视频</string>
+    <!--生成临时版本-->
+    <!--    <string name="title_friend">云村</string>-->
+    <!--    <string name="title_video">账号</string>-->
 
     <!--主界面相关-->
     <string name="person_fm">私人FM</string>
     <string name="rank">排行榜</string>
     <string name="day_recommend">每日推荐</string>
     <string name="sheet">歌单</string>
+
+    <!--歌单详情-->
+    <string name="sheet_detail">歌单详情</string>
+    <string name="play_all">播放全部</string>
+    <string name="music_count">(共%1$d首)</string>
+    <string name="download">下载</string>
+    <string name="select">多选</string>
+    <string name="cancel_collection">取消(%1$d)</string>
+    <string name="collection">收藏(%1$d)</string>
+    <string name="cancel_success">取消成功</string>
+    <string name="collection_success">收藏成功</string>
+    <string name="search">搜索</string>
+    <string name="sort">排序</string>
+    <string name="report">举报</string>
 
 </resources>

@@ -153,7 +153,8 @@ public class BaseCommonActivity extends BaseActivity {
 
     /**
      * 启动界面,并告知要添加的Fragment
-     * @param clazz 要启动的界面
+     * @param clazz 要启动的包含Fragment的界面
+     * @param fragmentTag 要启动的Fragment的标记
      */
     public void startActivityContainFragment(Class<?> clazz, String fragmentTag) {
         Intent intent = new Intent(getCurrentActivity(), clazz);
@@ -196,5 +197,4 @@ public class BaseCommonActivity extends BaseActivity {
     protected void bindView() {
         ButterKnife.bind(this);
     }
-
 }

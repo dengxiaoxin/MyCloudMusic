@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/tv_position"
+            android:layout_width="@dimen/item_song_height"
+            android:layout_height="@dimen/item_song_height"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@color/text" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="这是歌曲名称"
+                android:textColor="@color/text" />
+
+            <TextView
+                android:id="@+id/tv_singer_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:text="歌手名"
+                android:textColor="@color/light_grey"
+                android:textSize="@dimen/text_small" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/ib_more"
+            android:layout_width="@dimen/item_song_height"
+            android:layout_height="@dimen/item_song_height"
+            android:scaleType="center"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_more_grey" />
+
+    </LinearLayout>
+
+    <include layout="@layout/divider_small" />
+</LinearLayout>
