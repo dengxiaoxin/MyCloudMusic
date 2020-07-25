@@ -1,6 +1,5 @@
 package com.jacky.mycloudmusic.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -130,10 +129,7 @@ public class DiscoveryFragment extends BaseCommonFragment implements OnBannerLis
                 } else if (data instanceof Sheet) {
                     //歌单
                     Sheet sheet = (Sheet) data;
-                    Intent intent = new Intent(getCurrentActivity(), CommonToolbarActivity.class);
-                    intent.putExtra(Constant.FRAGMENT_TAG, Constant.SHEET_DETAIL_FRAGMENT);
-                    intent.putExtra(Constant.SHEET_ID, sheet.getId());
-                    startActivity(intent);
+                    startActivityContainFragment(CommonToolbarActivity.class, Constant.SHEET_DETAIL_FRAGMENT, sheet.getId());
                 }
             }
         });

@@ -1,5 +1,7 @@
 package com.jacky.mycloudmusic.fragment;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestListener;
 import com.github.florent37.glidepalette.GlidePalette;
 import com.jacky.mycloudmusic.R;
+import com.jacky.mycloudmusic.activity.CommonToolbarActivity;
 import com.jacky.mycloudmusic.adapter.SongAdapter;
 import com.jacky.mycloudmusic.domain.Sheet;
 import com.jacky.mycloudmusic.domain.response.DetailResponse;
@@ -28,13 +31,15 @@ import com.jacky.mycloudmusic.listener.HttpObserver;
 import com.jacky.mycloudmusic.networkapi.RetrofitAPI;
 import com.jacky.mycloudmusic.util.Constant;
 import com.jacky.mycloudmusic.util.ImageUtil;
+import com.jacky.mycloudmusic.util.ToastUtil;
 
 import butterknife.BindView;
+import retrofit2.Response;
 
 /**
  * 歌单详情页
  */
-public class SheetDetailFragment extends BaseCommonFragment {
+public class SheetDetailFragment extends BaseCommonFragment implements View.OnClickListener {
 
     @BindView(R.id.rv)
     RecyclerView rv;
@@ -44,6 +49,8 @@ public class SheetDetailFragment extends BaseCommonFragment {
     private ImageView ivBanner;
 
     private TextView tvTitle;
+
+    private LinearLayout llUser;
 
     private ImageView ivAvatar;
 
@@ -112,6 +119,7 @@ public class SheetDetailFragment extends BaseCommonFragment {
         llHeader = view.findViewById(R.id.ll_header);
         ivBanner = view.findViewById(R.id.iv_banner);
         tvTitle = view.findViewById(R.id.tv_title);
+        llUser = view.findViewById(R.id.ll_user);
         ivAvatar = view.findViewById(R.id.iv_avatar);
         tvUserName = view.findViewById(R.id.tv_user_name);
         llCommentContainer = view.findViewById(R.id.ll_comment_container);
@@ -242,5 +250,111 @@ public class SheetDetailFragment extends BaseCommonFragment {
         tvUserName.setText(data.getUser().getNickname());
         tvCommentCount.setText(String.valueOf(data.getComments_count()));
         tvMusicCount.setText(getString(R.string.music_count, data.getSongsCount()));
+
+        //收藏按钮
+        showCollectionStatus();
+    }
+
+    @SuppressLint("ResourceType")
+    private void showCollectionStatus() {
+        if (data.isCollection()) {
+            //将按钮文字改为取消
+            btnCollection.setText(getResources().getString(R.string.cancel_collection, data.getCollections_count()));
+
+            //弱化取消收藏按钮,去掉背景
+            btnCollection.setBackgroundColor(Color.TRANSPARENT);
+            //btnCollection.setBackground(null);
+
+            //设置文字颜色为灰色
+            btnCollection.setTextColor(getResources().getColor(R.color.light_grey));
+        } else {
+            //将按钮文字改为收藏
+            btnCollection.setText(getResources().getString(R.string.collection, data.getCollections_count()));
+
+            //设置按钮颜色为主色调
+            btnCollection.setBackgroundResource(R.drawable.selector_color_primary);
+
+            //将文字颜色设置为白色
+            btnCollection.setTextColor(getResources().getColorStateList(R.color.selector_text_color_primary_reverse));
+        }
+    }
+
+    @Override
+    protected void initListeners() {
+        super.initListeners();
+
+        btnCollection.setOnClickListener(this);
+        llUser.setOnClickListener(this);
+        llCommentContainer.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_collection:
+                onBtnCollectionClick();
+                break;
+            case R.id.ll_user:
+                onUserClick();
+                break;
+            case R.id.ll_comment_container:
+                onCommentClick();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void onBtnCollectionClick() {
+        if (data.isCollection()) {
+            //已经收藏了
+
+            //取消收藏
+            RetrofitAPI.getInstance()
+                    .deleteCollect(data.getId())
+                    .subscribe(new HttpObserver<Response<Void>>() {
+                        @Override
+                        public void onSucceeded(Response<Void> d) {
+                            //弹出提示
+                            ToastUtil.successShortToast(R.string.cancel_success);
+
+                            //重新加载数据
+                            //目的是显示新的收藏状态
+                            //fetchData();
+                            data.setCollection_id(null);
+                            data.setCollections_count(data.getCollections_count() - 1);
+                            showCollectionStatus();
+                        }
+                    });
+        } else {
+            //没有收藏
+
+            //收藏
+            RetrofitAPI.getInstance()
+                    .collect(data.getId())
+                    .subscribe(new HttpObserver<Response<Void>>() {
+                        @Override
+                        public void onSucceeded(Response<Void> d) {
+                            //弹出提示
+                            ToastUtil.successShortToast(R.string.collection_success);
+
+                            //重新加载数据
+                            //目的是显示新的收藏状态
+                            //fetchData();
+                            data.setCollection_id(1);
+                            data.setCollections_count(data.getCollections_count() + 1);
+                            //刷新状态
+                            showCollectionStatus();
+                        }
+                    });
+        }
+    }
+
+    private void onUserClick() {
+        startActivityContainFragment(CommonToolbarActivity.class, Constant.USER_DETAIL_FRAGMENT, data.getUser().getId());
+    }
+
+    private void onCommentClick() {
+        startActivityContainFragment(CommonToolbarActivity.class, Constant.COMMENT_FRAGMENT, sheetId);
     }
 }

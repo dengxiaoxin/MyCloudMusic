@@ -31,35 +31,46 @@ public class BaseCommonFragment extends BaseFragment {
     /**
      * 启动界面并关闭当前界面
      */
-    public void startActivityAndFinishThis(Class<?> clazz) {
-        getCurrentActivity().startActivityAndFinishThis(clazz);
+    public void startActivityAndFinishThis(Class<?> toActivityClass) {
+        getCurrentActivity().startActivityAndFinishThis(toActivityClass);
     }
 
     /**
      * 启动界面
      */
-    public void startActivity(Class<?> clazz) {
-        getCurrentActivity().startActivity(clazz);
+    public void startActivity(Class<?> toActivityClass) {
+        getCurrentActivity().startActivity(toActivityClass);
     }
 
     /**
      * 启动界面,并告知要添加的Fragment
-     * @param clazz 要启动的包含Fragment的界面
-     * @param fragmentTag 要启动的Fragment的标记
+     *
+     * @param toActivityClass 要启动的包含Fragment的界面
+     * @param fragmentTag     要启动的Fragment的标记
      */
-    public void startActivityContainFragment(Class<?> clazz, String fragmentTag) {
-        getCurrentActivity().startActivityContainFragment(clazz, fragmentTag);
+    public void startActivityContainFragment(Class<?> toActivityClass, String fragmentTag) {
+        getCurrentActivity().startActivityContainFragment(toActivityClass, fragmentTag);
+    }
+
+    /**
+     * 启动界面,并告知要添加的Fragment
+     * @param toActivityClass 要启动的包含Fragment的界面
+     * @param fragmentTag 要启动的Fragment的标记
+     * @param id 歌单id、用户id等
+     */
+    public void startActivityContainFragment(Class<?> toActivityClass, String fragmentTag, String id) {
+        getCurrentActivity().startActivityContainFragment(toActivityClass, fragmentTag, id);
     }
 
     /**
      * 启动包含WebView的界面
      *
-     * @param clazz 要启动的界面
+     * @param toActivityClass 要启动的界面
      * @param title ToolBar标题
      * @param url   网址链接
      */
-    public void startActivityContainWebView(Class<?> clazz, String title, String url) {
-        getCurrentActivity().startActivityContainWebView(clazz, title, url);
+    public void startActivityContainWebView(Class<?> toActivityClass, String title, String url) {
+        getCurrentActivity().startActivityContainWebView(toActivityClass, title, url);
     }
 
     public BaseCommonActivity getCurrentActivity() {

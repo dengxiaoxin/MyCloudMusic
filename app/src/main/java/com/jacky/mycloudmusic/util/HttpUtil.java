@@ -2,6 +2,7 @@ package com.jacky.mycloudmusic.util;
 
 import android.text.TextUtils;
 
+import com.jacky.mycloudmusic.AppContext;
 import com.jacky.mycloudmusic.R;
 import com.jacky.mycloudmusic.domain.response.BaseResponse;
 
@@ -10,6 +11,7 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import retrofit2.HttpException;
+import retrofit2.Response;
 
 public class HttpUtil {
 
@@ -32,23 +34,28 @@ public class HttpUtil {
                 //获取响应码
                 int code = exception.code();
 
-                if (code == 401) {
-                    ToastUtil.errorShortToast(R.string.error_network_not_auth);
-                } else if (code == 403) {
-                    ToastUtil.errorShortToast(R.string.error_network_not_permission);
-                } else if (code == 404) {
-                    ToastUtil.errorShortToast(R.string.error_network_not_found);
-                } else if (code >= 500) {
-                    ToastUtil.errorShortToast(R.string.error_network_server);
-                } else {
-                    ToastUtil.errorShortToast(R.string.error_network_unknown);
-                }
+                handleHttpError(code);
             } else {
                 ToastUtil.errorShortToast(R.string.error_network_unknown);
             }
         } else {
             //再判断业务异常
-            if (data instanceof BaseResponse) {
+            if (data instanceof Response) {
+                //retrofit里面的对象
+
+                //获取响应对象
+                Response response = (Response) data;
+
+                //获取响应码
+                int code = response.code();
+
+                //判断响应码
+                if (code >= 200 && code <= 299) {
+                    //网络请求正常
+                } else {
+                    handleHttpError(code);
+                }
+            } else if (data instanceof BaseResponse) {
                 BaseResponse response = (BaseResponse) data;
 
                 String message = response.getMessage();
@@ -59,6 +66,26 @@ public class HttpUtil {
                     ToastUtil.errorShortToast(message);
                 }
             }
+        }
+    }
+
+    /**
+     * 处理Http错误
+     *
+     * @param code
+     */
+    private static void handleHttpError(int code) {
+        if (code == 401) {
+            ToastUtil.errorShortToast(R.string.error_network_not_auth);
+            AppContext.getInstance().logout();
+        } else if (code == 403) {
+            ToastUtil.errorShortToast(R.string.error_network_not_permission);
+        } else if (code == 404) {
+            ToastUtil.errorShortToast(R.string.error_network_not_found);
+        } else if (code >= 500) {
+            ToastUtil.errorShortToast(R.string.error_network_server);
+        } else {
+            ToastUtil.errorShortToast(R.string.error_network_unknown);
         }
     }
 }

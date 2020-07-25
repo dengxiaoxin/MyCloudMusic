@@ -3,6 +3,6 @@
     <!--按钮按下颜色-->
     <item android:state_pressed="true" android:color="@color/colorPrimary"/>
 
-    <!--按钮按下颜色-->
+    <!--按钮未按下颜色-->
     <item android:color="@color/white"/>
 </selector>

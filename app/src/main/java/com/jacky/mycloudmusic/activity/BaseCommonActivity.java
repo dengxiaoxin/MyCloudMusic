@@ -134,43 +134,57 @@ public class BaseCommonActivity extends BaseActivity {
 
     /**
      * 启动界面并关闭当前界面
-     * @param clazz 要启动的界面
+     * @param toActivityClass 要启动的界面
      */
-    public void startActivityAndFinishThis(Class<?> clazz) {
-        Intent intent = new Intent(getCurrentActivity(), clazz);
+    public void startActivityAndFinishThis(Class<?> toActivityClass) {
+        Intent intent = new Intent(getCurrentActivity(), toActivityClass);
         startActivity(intent);
         finish();
     }
 
     /**
      * 启动界面
-     * @param clazz 要启动的界面
+     * @param toActivityClass 要启动的界面
      */
-    public void startActivity(Class<?> clazz) {
-        Intent intent = new Intent(getCurrentActivity(), clazz);
+    public void startActivity(Class<?> toActivityClass) {
+        Intent intent = new Intent(getCurrentActivity(), toActivityClass);
         startActivity(intent);
     }
 
     /**
      * 启动界面,并告知要添加的Fragment
-     * @param clazz 要启动的包含Fragment的界面
-     * @param fragmentTag 要启动的Fragment的标记
+     *
+     * @param toActivityClass 要启动的包含Fragment的界面
+     * @param fragmentTag     要启动的Fragment的标记
      */
-    public void startActivityContainFragment(Class<?> clazz, String fragmentTag) {
-        Intent intent = new Intent(getCurrentActivity(), clazz);
+    public void startActivityContainFragment(Class<?> toActivityClass, String fragmentTag) {
+        Intent intent = new Intent(getCurrentActivity(), toActivityClass);
         intent.putExtra(Constant.FRAGMENT_TAG, fragmentTag);
+        startActivity(intent);
+    }
+
+    /**
+     * 启动界面,并告知要添加的Fragment
+     * @param toActivityClass 要启动的包含Fragment的界面
+     * @param fragmentTag 要启动的Fragment的标记
+     * @param id 歌单id、用户id等
+     */
+    public void startActivityContainFragment(Class<?> toActivityClass, String fragmentTag, String id) {
+        Intent intent = new Intent(getCurrentActivity(), toActivityClass);
+        intent.putExtra(Constant.FRAGMENT_TAG, fragmentTag);
+        intent.putExtra(Constant.ID, id);
         startActivity(intent);
     }
 
     /**
      * 启动包含WebView的界面
      *
-     * @param clazz 要启动的界面
+     * @param toActivityClass 要启动的界面
      * @param title ToolBar标题
      * @param url   网址链接
      */
-    public void startActivityContainWebView(Class<?> clazz, String title, String url) {
-        Intent intent = new Intent(getCurrentActivity(), clazz);
+    public void startActivityContainWebView(Class<?> toActivityClass, String title, String url) {
+        Intent intent = new Intent(getCurrentActivity(), toActivityClass);
         intent.putExtra(Constant.FRAGMENT_TAG, Constant.WEB_VIEW_FRAGMENT);
         //添加标题
         intent.putExtra(Constant.TITLE, title);

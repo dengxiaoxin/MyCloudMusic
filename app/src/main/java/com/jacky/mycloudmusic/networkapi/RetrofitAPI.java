@@ -2,6 +2,7 @@ package com.jacky.mycloudmusic.networkapi;
 
 import android.text.TextUtils;
 
+import com.jacky.mycloudmusic.AppContext;
 import com.jacky.mycloudmusic.domain.Ad;
 import com.jacky.mycloudmusic.domain.BaseModel;
 import com.jacky.mycloudmusic.domain.Session;
@@ -12,19 +13,24 @@ import com.jacky.mycloudmusic.domain.response.DetailResponse;
 import com.jacky.mycloudmusic.domain.response.ListResponse;
 import com.jacky.mycloudmusic.util.Constant;
 import com.jacky.mycloudmusic.util.LogUtil;
+import com.jacky.mycloudmusic.util.PreferencesUtil;
 
 import java.util.HashMap;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitAPI {
+    private static final String TAG = "======RetrofitAPI";
     /**
      * RetrofitAPI单例字段
      */
@@ -40,6 +46,35 @@ public class RetrofitAPI {
      */
     private RetrofitAPI() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+        //传递公共请求参数,通过OkHttp拦截器在请求头上添加公共的用户登录信息
+        Interceptor netInterceptor = chain -> {
+            //获取到偏好设置工具类
+            PreferencesUtil sp = PreferencesUtil.getInstance(AppContext.getInstance());
+
+            //获取到request
+            Request request = chain.request();
+
+            if (sp.isAlreadyLogin()) {
+                //获取出用户Id和token
+                String user = sp.getUserId();
+                String session = sp.getSession();
+
+                //打印日志方便调试
+                LogUtil.d(TAG, "RetrofitAPI user:" + user + "," + session);
+
+                //将用户id和token设置到请求头
+                request = request.newBuilder()
+                        .addHeader("User", user)
+                        .addHeader("Authorization", session)
+                        .build();
+            }
+
+            //继续执行网络请求
+            return chain.proceed(request);
+        };
+
+        builder.addNetworkInterceptor(netInterceptor);
 
         if (LogUtil.isDebug) {
             //调试模式
@@ -158,6 +193,26 @@ public class RetrofitAPI {
      */
     public Observable<ListResponse<Ad>> ads() {
         return requestAPI.ads()
+                //固定写法
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * 收藏歌单
+     */
+    public Observable<Response<Void>> collect(String id) {
+        return requestAPI.collect(id)
+                //固定写法
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * 取消收藏歌单
+     */
+    public Observable<Response<Void>> deleteCollect(String id) {
+        return requestAPI.deleteCollect(id)
                 //固定写法
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
