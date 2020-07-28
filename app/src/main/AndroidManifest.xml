@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.jacky.mycloudmusic">
+
     <!-- http网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- 读存取卡权限-->
+    <!-- 读存取卡权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--有前台服务-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:name=".AppContext"
@@ -14,7 +18,15 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true"><!-- http网络权限配置2 -->
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m"><!-- http网络权限配置2 -->
+        <service
+            android:name=".service.MusicPlayerService"
+            android:enabled="true"
+            android:exported="false"
+            android:persistent="true"
+            android:priority="1000" />
+
         <activity android:name=".activity.AdActivity" />
         <activity android:name=".activity.CommonToolbarActivity" />
         <activity android:name=".activity.LoginOrRegisterActivity" />

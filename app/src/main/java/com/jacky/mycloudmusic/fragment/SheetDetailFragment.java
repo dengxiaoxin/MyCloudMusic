@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestListener;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.florent37.glidepalette.GlidePalette;
 import com.jacky.mycloudmusic.R;
 import com.jacky.mycloudmusic.activity.CommonToolbarActivity;
@@ -41,6 +42,7 @@ import retrofit2.Response;
  */
 public class SheetDetailFragment extends BaseCommonFragment implements View.OnClickListener {
 
+    private static final String TAG = "======SheetDetailFragment";
     @BindView(R.id.rv)
     RecyclerView rv;
 
@@ -286,6 +288,14 @@ public class SheetDetailFragment extends BaseCommonFragment implements View.OnCl
         btnCollection.setOnClickListener(this);
         llUser.setOnClickListener(this);
         llCommentContainer.setOnClickListener(this);
+
+        //设置item点击事件
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                startActivityContainFragment(CommonToolbarActivity.class, Constant.SIMPLE_PLAYER_FRAGMENT);
+            }
+        });
     }
 
     @Override

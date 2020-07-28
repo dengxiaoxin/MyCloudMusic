@@ -34,6 +34,7 @@ public class Constant {
     public static final String SHEET_DETAIL_FRAGMENT = "SHEET_DETAIL_FRAGMENT";
     public static final String COMMENT_FRAGMENT = "COMMENT_FRAGMENT";
     public static final String USER_DETAIL_FRAGMENT = "USER_DETAIL_FRAGMENT";
+    public static final String SIMPLE_PLAYER_FRAGMENT = "SIMPLE_PLAYER_FRAGMENT";
 
     /**
      * 手机号正则表达式
