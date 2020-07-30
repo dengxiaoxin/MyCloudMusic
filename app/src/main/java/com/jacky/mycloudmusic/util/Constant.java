@@ -65,4 +65,22 @@ public class Constant {
      * 歌曲
      */
     public static final int TYPE_SONG = 2;
+
+    /**
+     * 计时器tick时间间隔：毫秒
+     */
+    //16毫秒
+    //为什么是16毫秒？
+    //因为后面我们要实现卡拉OK歌词
+    //为了画面的连贯性
+    //应该保持1秒60帧
+    //所以1/60；就是一帧时间
+    //如果没有卡拉OK歌词
+    //那么每秒钟刷新一次即可
+    public static final int DEFAULT_TIME = 16;
+
+    /**
+     * 消息编号
+     */
+    public static final int MESSAGE_PROGRESS = 0;
 }

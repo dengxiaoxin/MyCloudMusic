@@ -1,5 +1,6 @@
 package com.jacky.mycloudmusic.fragment;
 
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,9 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jacky.mycloudmusic.R;
 import com.jacky.mycloudmusic.domain.Song;
+import com.jacky.mycloudmusic.listener.MusicPlayerListener;
 import com.jacky.mycloudmusic.manager.MusicPlayerManager;
 import com.jacky.mycloudmusic.service.MusicPlayerService;
 import com.jacky.mycloudmusic.util.LogUtil;
+import com.jacky.mycloudmusic.util.TimeUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -24,7 +27,7 @@ import butterknife.OnClick;
 /**
  * 简单播放器界面
  */
-public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.OnSeekBarChangeListener {
+public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.OnSeekBarChangeListener, MusicPlayerListener {
 
     private static final String TAG = "======SimplePlayerFragment";
     /**
@@ -106,7 +109,7 @@ public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.
         musicPlayerManager = MusicPlayerService.getMusicPlayerManager(getCurrentActivity());
 
         //测试播放音乐
-        String songUrl = "http://dev-courses-misuc.ixuea.com/assets/s1.mp3";
+        String songUrl = "http://dev-courses-misuc.ixuea.com/assets/s2.mp3";
         Song song = new Song();
         song.setUri(songUrl);
         musicPlayerManager.play(songUrl, song);
@@ -117,6 +120,39 @@ public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.
         super.initListeners();
         //设置进度条监听器
         sbProgress.setOnSeekBarChangeListener(this);
+    }
+
+    /**
+     * 界面恢复可见
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        LogUtil.d(TAG, "onResume");
+
+        //设置播放监听器
+        musicPlayerManager.addMusicPlayerListener(this);
+
+        //显示音乐总时长
+        showDuration();
+
+        //显示播放进度
+        showProgress();
+
+        //显示播放状态
+        showMusicPlayStatus();
+    }
+
+    /**
+     * 界面进入后台不可见
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        //取消播放监听器
+        musicPlayerManager.removeMusicPlayerListener(this);
     }
 
     /**
@@ -177,7 +213,8 @@ public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.
      */
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        LogUtil.d(TAG, "onProgressChanged" + progress + "," + fromUser);
+        if (fromUser)
+            musicPlayerManager.seekTo(progress);
     }
 
     @Override
@@ -188,5 +225,70 @@ public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         LogUtil.d(TAG, "onStopTrackingTouch");
+    }
+
+    //播放管理监听器
+    @Override
+    public void onPaused(Song data) {
+        showPlayStatus();
+    }
+
+    @Override
+    public void onPlaying(Song data) {
+        showPauseStatus();
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mp, Song data) {
+        //显示时长
+        showDuration();
+    }
+
+    @Override
+    public void onProgress(Song data) {
+        showProgress();
+    }
+    //end 播放管理监听器
+
+    private void showPlayStatus() {
+        btnPlay.setText("播放");
+    }
+
+    private void showPauseStatus() {
+        btnPlay.setText("暂停");
+    }
+
+    // 显示音乐播放按钮等状态
+    void showMusicPlayStatus() {
+        if (musicPlayerManager.isPlaying()) {
+            showPauseStatus();
+        } else {
+            showPlayStatus();
+        }
+    }
+
+    private void showDuration() {
+        //获取当前正在播放的音乐总时长
+        long end = musicPlayerManager.getData().getDuration();
+
+        //将毫秒格式化为分钟:秒
+        tvEnd.setText(TimeUtil.formatMinuteSecond((int) end));
+
+        //设置到进度条
+        sbProgress.setMax((int) end);
+    }
+
+    /**
+     * 显示进度
+     */
+    private void showProgress() {
+        //获取当前的播放进度
+        long progress = musicPlayerManager.getData().getProgress();
+
+        //将毫秒格式化为分钟:秒
+        tvStart.setText(TimeUtil.formatMinuteSecond((int) progress));
+
+        //设置到进度条
+        sbProgress.setProgress((int) progress);
     }
 }
