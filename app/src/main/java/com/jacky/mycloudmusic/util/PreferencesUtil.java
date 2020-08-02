@@ -21,6 +21,17 @@ public class PreferencesUtil {
     private static final String SESSION = "SESSION";
 
     /**
+     * 音乐循环模式key
+     */
+    private static final String LOOP_MODE = "loop_mode";
+
+    /**
+     * 最后播放的音乐信息记录
+     */
+    private static final String LAST_SONG_ID = "last_song_id";
+    private static final String LAST_SONG_PROGRESS = "last_song_progress";
+
+    /**
      * 实例
      */
     private static PreferencesUtil instance;
@@ -70,8 +81,6 @@ public class PreferencesUtil {
 
     /**
      * get和set userId、session
-     *
-     * @return
      */
     public String getUserId() {
         return getString(USER_ID, null);
@@ -104,6 +113,37 @@ public class PreferencesUtil {
         delete(SESSION);
     }
 
+    /**
+     * 音乐循环模式设置与获取
+     * 获取时没有值就默认返回列表模式
+     */
+    public int getLoopMode() {
+        return getInt(LOOP_MODE, Constant.MODEL_LOOP_LIST);
+    }
+
+    public void setLoopMode(int value) {
+        putInt(LOOP_MODE, value);
+    }
+
+    /**
+     * 最后播放的音乐信息设置与获取
+     */
+    public String getLastSongId() {
+        return getString(LAST_SONG_ID, null);
+    }
+
+    public void setLastSongId(String value) {
+        putString(LAST_SONG_ID, value);
+    }
+
+    public long getLastSongProgress() {
+        return getLong(LAST_SONG_PROGRESS, 0);
+    }
+
+    public void setLastSongProgress(long value) {
+        putLong(LAST_SONG_PROGRESS, value);
+    }
+
     //辅助方法
 
     /**
@@ -132,6 +172,34 @@ public class PreferencesUtil {
      */
     private boolean getBoolean(String key, boolean defaultValue) {
         return preferences.getBoolean(key, defaultValue);
+    }
+
+    /**
+     * 保存int
+     */
+    private void putInt(String key, int value) {
+        preferences.edit().putInt(key, value).apply();
+    }
+
+    /**
+     * 获取int
+     */
+    private int getInt(String key, int defaultValue) {
+        return preferences.getInt(key, defaultValue);
+    }
+
+    /**
+     * 保存long
+     */
+    private void putLong(String key, long value) {
+        preferences.edit().putLong(key, value).apply();
+    }
+
+    /**
+     * 获取long
+     */
+    private long getLong(String key, long defaultValue) {
+        return preferences.getLong(key, defaultValue);
     }
 
     /**

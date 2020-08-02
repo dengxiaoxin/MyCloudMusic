@@ -11,12 +11,16 @@ import androidx.viewpager.widget.ViewPager;
 import com.jacky.mycloudmusic.activity.BaseCommonActivity;
 import com.jacky.mycloudmusic.activity.CommonToolbarActivity;
 import com.jacky.mycloudmusic.adapter.NoArgViewPagerAdapter;
+import com.jacky.mycloudmusic.domain.Song;
 import com.jacky.mycloudmusic.fragment.DiscoveryFragment;
 import com.jacky.mycloudmusic.fragment.FriendFragment;
 import com.jacky.mycloudmusic.fragment.MineFragment;
 import com.jacky.mycloudmusic.fragment.VideoFragment;
 import com.jacky.mycloudmusic.indicator.SelectBigPagerTitleView;
+import com.jacky.mycloudmusic.manager.MusicPlayerManager;
+import com.jacky.mycloudmusic.manager.impl.MusicPlayerManagerImpl;
 import com.jacky.mycloudmusic.util.Constant;
+import com.jacky.mycloudmusic.util.LogUtil;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -32,6 +36,7 @@ import butterknife.BindView;
 
 public class MainActivity extends BaseCommonActivity {
 
+    private static final String TAG = "======MainActivity";
     @BindView(R.id.vp_main)
     ViewPager vpMain;
 
@@ -168,5 +173,24 @@ public class MainActivity extends BaseCommonActivity {
 
         //默认选中第二个界面
         vpMain.setCurrentItem(1);
+    }
+
+    @Override
+    protected void onDestroy() {
+        LogUtil.d(TAG, "onDestroy");
+
+        MusicPlayerManager musicPlayerManager = MusicPlayerManagerImpl.getInstance(this);
+
+        Song data = musicPlayerManager.getData();
+
+        if (data == null) {
+            sp.setLastSongId(null);
+            sp.setLastSongProgress(0);
+        } else {
+            sp.setLastSongId(data.getId());
+            sp.setLastSongProgress(data.getProgress());
+        }
+
+        super.onDestroy();
     }
 }

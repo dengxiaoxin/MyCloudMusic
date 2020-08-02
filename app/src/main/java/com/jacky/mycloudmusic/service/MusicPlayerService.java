@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
 
+import com.jacky.mycloudmusic.manager.ListManager;
 import com.jacky.mycloudmusic.manager.MusicPlayerManager;
+import com.jacky.mycloudmusic.manager.impl.ListManagerImpl;
 import com.jacky.mycloudmusic.manager.impl.MusicPlayerManagerImpl;
 import com.jacky.mycloudmusic.util.LogUtil;
 import com.jacky.mycloudmusic.util.NotificationUtil;
@@ -23,12 +25,26 @@ public class MusicPlayerService extends Service {
 
     }
 
+    /**
+     * 获取音乐播放管理器
+     */
     public static MusicPlayerManager getMusicPlayerManager(Context context) {
         context = context.getApplicationContext();
         //尝试启动service
         ServiceUtil.startService(context, MusicPlayerService.class);
 
         return MusicPlayerManagerImpl.getInstance(context);
+    }
+
+    /**
+     * 获取列表管理器
+     */
+    public static ListManager getListManager(Context context) {
+        context = context.getApplicationContext();
+        //尝试启动service
+        ServiceUtil.startService(context, MusicPlayerService.class);
+
+        return ListManagerImpl.getInstance(context);
     }
 
     /**

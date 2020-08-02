@@ -11,13 +11,18 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jacky.mycloudmusic.R;
+import com.jacky.mycloudmusic.adapter.SimplePlayerRvAdapter;
 import com.jacky.mycloudmusic.domain.Song;
 import com.jacky.mycloudmusic.listener.MusicPlayerListener;
+import com.jacky.mycloudmusic.manager.ListManager;
 import com.jacky.mycloudmusic.manager.MusicPlayerManager;
 import com.jacky.mycloudmusic.service.MusicPlayerService;
+import com.jacky.mycloudmusic.util.Constant;
 import com.jacky.mycloudmusic.util.LogUtil;
 import com.jacky.mycloudmusic.util.TimeUtil;
 
@@ -72,7 +77,10 @@ public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.
     @BindView(R.id.btn_loop_model)
     Button btnLoopModel;
 
+    private ListManager listManager;
     private MusicPlayerManager musicPlayerManager;
+
+    private SimplePlayerRvAdapter adapter;
 
     public SimplePlayerFragment() {
         // Required empty public constructor
@@ -88,6 +96,7 @@ public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LogUtil.d(TAG, "onCreate");
         if (getArguments() != null) {
 //            mParam1 = getArguments().getString(ARG_PARAM1);
 //            mParam2 = getArguments().getString(ARG_PARAM2);
@@ -102,17 +111,33 @@ public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.
     }
 
     @Override
+    protected void initViews() {
+        super.initViews();
+
+        rv.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getCurrentActivity());
+        rv.setLayoutManager(layoutManager);
+        adapter = new SimplePlayerRvAdapter(android.R.layout.simple_list_item_1);
+        rv.setAdapter(adapter);
+    }
+
+    @Override
     protected void initData() {
         super.initData();
 
-        //获取播放管理器
+        listManager = MusicPlayerService.getListManager(getCurrentActivity());
         musicPlayerManager = MusicPlayerService.getMusicPlayerManager(getCurrentActivity());
 
-        //测试播放音乐
-        String songUrl = "http://dev-courses-misuc.ixuea.com/assets/s2.mp3";
-        Song song = new Song();
-        song.setUri(songUrl);
-        musicPlayerManager.play(songUrl, song);
+        adapter.replaceData(listManager.getDataList());
+
+        //显示循环模式
+        showLoopModel();
+
+//        //测试播放音乐
+//        String songUrl = "http://dev-courses-misuc.ixuea.com/assets/s2.mp3";
+//        Song song = new Song();
+//        song.setUri(songUrl);
+//        musicPlayerManager.play(songUrl, song);
     }
 
     @Override
@@ -120,6 +145,14 @@ public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.
         super.initListeners();
         //设置进度条监听器
         sbProgress.setOnSeekBarChangeListener(this);
+
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Song data = listManager.getDataList().get(position);
+                listManager.playWithCheck(data);
+            }
+        });
     }
 
     /**
@@ -133,6 +166,9 @@ public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.
 
         //设置播放监听器
         musicPlayerManager.addMusicPlayerListener(this);
+
+        //显示歌曲名称
+        ShowSongName();
 
         //显示音乐总时长
         showDuration();
@@ -151,16 +187,17 @@ public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.
     public void onPause() {
         super.onPause();
 
+        LogUtil.d(TAG, "onPause");
+
         //取消播放监听器
         musicPlayerManager.removeMusicPlayerListener(this);
     }
 
-    /**
-     * 上一曲点击
-     */
-    @OnClick(R.id.btn_previous)
-    public void onPreviousClick() {
-        LogUtil.d(TAG, "onPreviousClick");
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        LogUtil.d(TAG, "onDestroy");
     }
 
     /**
@@ -183,9 +220,9 @@ public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.
      */
     private void playOrPause() {
         if (musicPlayerManager.isPlaying()) {
-            musicPlayerManager.pause();
+            listManager.pause();
         } else {
-            musicPlayerManager.resume();
+            listManager.resume();
         }
     }
 
@@ -196,6 +233,17 @@ public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.
     public void onNextClick() {
         LogUtil.d(TAG, "onNextClick");
 
+        listManager.next();
+    }
+
+    /**
+     * 上一曲点击
+     */
+    @OnClick(R.id.btn_previous)
+    public void onPreviousClick() {
+        LogUtil.d(TAG, "onPreviousClick");
+
+        listManager.previous();
     }
 
     /**
@@ -204,6 +252,27 @@ public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.
     @OnClick(R.id.btn_loop_model)
     public void onLoopModelClick() {
         LogUtil.d(TAG, "onLoopModelClick");
+
+        listManager.changeLoopModel();
+        showLoopModel();
+    }
+
+    private void showLoopModel() {
+        int model = listManager.getLoopModel();
+
+        switch (model) {
+            case Constant.MODEL_LOOP_LIST:
+                btnLoopModel.setText("列表循环");
+                break;
+            case Constant.MODEL_LOOP_ONE:
+                btnLoopModel.setText("单曲循环");
+                break;
+            case Constant.MODEL_LOOP_RANDOM:
+                btnLoopModel.setText("随机模式");
+                break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -227,7 +296,7 @@ public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.
         LogUtil.d(TAG, "onStopTrackingTouch");
     }
 
-    //播放管理监听器
+    ///////////////////////////播放管理监听器////////////////////////////
     @Override
     public void onPaused(Song data) {
         showPlayStatus();
@@ -240,15 +309,29 @@ public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.
 
     @Override
     public void onPrepared(MediaPlayer mp, Song data) {
+        //显示歌曲名称
+        ShowSongName();
+
         //显示时长
         showDuration();
+    }
+
+    private void ShowSongName() {
+        tvTitle.setText(listManager.getData().getTitle());
     }
 
     @Override
     public void onProgress(Song data) {
         showProgress();
     }
-    //end 播放管理监听器
+
+//    @Override
+//    public void onCompletion(MediaPlayer mp) {
+//        LogUtil.d(TAG, "onCompletion");
+//        //单曲循环不会触发此事件
+//        //所以这里只要处理非单曲循环的情况即可
+//    }
+    /////////////////////////end 播放管理监听器//////////////////////////
 
     private void showPlayStatus() {
         btnPlay.setText("播放");

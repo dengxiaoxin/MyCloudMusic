@@ -2,11 +2,13 @@ package com.jacky.mycloudmusic.manager.impl;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.jacky.mycloudmusic.domain.Song;
 import com.jacky.mycloudmusic.listener.MusicPlayerListener;
@@ -91,6 +93,13 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
                 ListUtil.eachListener(listeners, listener -> listener.onPrepared(mp, data));
             }
         });
+
+        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                ListUtil.eachListener(listeners, listener -> listener.onCompletion(mp));
+            }
+        });
     }
 
     /**
@@ -108,6 +117,7 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
         return instance;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void play(String uri, Song data) {
         try {
@@ -191,6 +201,11 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
     @Override
     public void seekTo(int progress) {
         player.seekTo(progress);
+    }
+
+    @Override
+    public void setLooping(boolean b) {
+        player.setLooping(b);
     }
 
     private void publishMusicStatus() {

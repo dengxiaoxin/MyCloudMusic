@@ -24,4 +24,11 @@ public interface MusicPlayerListener {
      * 音乐进度改变
      */
     void onProgress(Song data);
+
+    /**
+     * 音乐播放完成
+     */
+    default void onCompletion(MediaPlayer mp) {
+
+    }
 }

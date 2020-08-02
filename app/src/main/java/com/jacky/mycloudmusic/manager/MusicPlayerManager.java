@@ -53,4 +53,10 @@ public interface MusicPlayerManager {
      * @param progress 单位:毫秒
      */
     void seekTo(int progress);
+
+    /**
+     * 设置歌曲是否循环
+     */
+    void setLooping(boolean b);
+
 }

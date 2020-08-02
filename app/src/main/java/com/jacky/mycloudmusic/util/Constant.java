@@ -83,4 +83,24 @@ public class Constant {
      * 消息编号
      */
     public static final int MESSAGE_PROGRESS = 0;
+
+    /**
+     * 列表循环
+     */
+    public static final int MODEL_LOOP_LIST = 0;
+
+    /**
+     * 单曲循环
+     */
+    public static final int MODEL_LOOP_ONE = 1;
+
+    /**
+     * 随机循环
+     */
+    public static final int MODEL_LOOP_RANDOM = 2;
+
+    /**
+     * 循环模式数量
+     */
+    public static final int LOOP_MODEL_COUNT = 3;
 }

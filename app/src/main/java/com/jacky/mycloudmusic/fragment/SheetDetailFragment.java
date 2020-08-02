@@ -27,9 +27,12 @@ import com.jacky.mycloudmusic.R;
 import com.jacky.mycloudmusic.activity.CommonToolbarActivity;
 import com.jacky.mycloudmusic.adapter.SongAdapter;
 import com.jacky.mycloudmusic.domain.Sheet;
+import com.jacky.mycloudmusic.domain.Song;
 import com.jacky.mycloudmusic.domain.response.DetailResponse;
 import com.jacky.mycloudmusic.listener.HttpObserver;
+import com.jacky.mycloudmusic.manager.ListManager;
 import com.jacky.mycloudmusic.networkapi.RetrofitAPI;
+import com.jacky.mycloudmusic.service.MusicPlayerService;
 import com.jacky.mycloudmusic.util.Constant;
 import com.jacky.mycloudmusic.util.ImageUtil;
 import com.jacky.mycloudmusic.util.ToastUtil;
@@ -79,6 +82,11 @@ public class SheetDetailFragment extends BaseCommonFragment implements View.OnCl
     private Sheet data;
 
     private SongAdapter adapter;
+
+    /**
+     * 列表管理器
+     */
+    private ListManager listManager;
 
     private SheetDetailFragment(String sheetId) {
         this.sheetId = sheetId;
@@ -136,6 +144,8 @@ public class SheetDetailFragment extends BaseCommonFragment implements View.OnCl
     @Override
     protected void initData() {
         super.initData();
+
+        listManager = MusicPlayerService.getListManager(getCurrentActivity());
 
         fetchData();
     }
@@ -293,9 +303,26 @@ public class SheetDetailFragment extends BaseCommonFragment implements View.OnCl
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivityContainFragment(CommonToolbarActivity.class, Constant.SIMPLE_PLAYER_FRAGMENT);
+                //startActivityContainFragment(CommonToolbarActivity.class, Constant.SIMPLE_PLAYER_FRAGMENT);
+                play(position);
             }
         });
+    }
+
+    /**
+     * 播放当前位置音乐
+     */
+    private void play(int position) {
+        //获取当前位置的音乐
+        Song data = adapter.getItem(position);
+
+        //把当前歌单所有音乐设置到播放列表
+        listManager.setDataList(adapter.getData());
+
+        listManager.playWithCheck(data);
+
+        //简单播放器界面
+        startActivityContainFragment(CommonToolbarActivity.class, Constant.SIMPLE_PLAYER_FRAGMENT);
     }
 
     @Override
