@@ -3,6 +3,7 @@ package com.jacky.mycloudmusic.fragment;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -30,12 +31,16 @@ import com.jacky.mycloudmusic.domain.Sheet;
 import com.jacky.mycloudmusic.domain.Song;
 import com.jacky.mycloudmusic.domain.response.DetailResponse;
 import com.jacky.mycloudmusic.listener.HttpObserver;
+import com.jacky.mycloudmusic.listener.MusicPlayerListener;
 import com.jacky.mycloudmusic.manager.ListManager;
+import com.jacky.mycloudmusic.manager.MusicPlayerManager;
 import com.jacky.mycloudmusic.networkapi.RetrofitAPI;
 import com.jacky.mycloudmusic.service.MusicPlayerService;
 import com.jacky.mycloudmusic.util.Constant;
 import com.jacky.mycloudmusic.util.ImageUtil;
 import com.jacky.mycloudmusic.util.ToastUtil;
+
+import java.util.List;
 
 import butterknife.BindView;
 import retrofit2.Response;
@@ -43,7 +48,7 @@ import retrofit2.Response;
 /**
  * 歌单详情页
  */
-public class SheetDetailFragment extends BaseCommonFragment implements View.OnClickListener {
+public class SheetDetailFragment extends BaseCommonFragment implements View.OnClickListener, MusicPlayerListener {
 
     private static final String TAG = "======SheetDetailFragment";
     @BindView(R.id.rv)
@@ -88,6 +93,8 @@ public class SheetDetailFragment extends BaseCommonFragment implements View.OnCl
      */
     private ListManager listManager;
 
+    private MusicPlayerManager musicPlayerManager;
+
     private SheetDetailFragment(String sheetId) {
         this.sheetId = sheetId;
     }
@@ -105,6 +112,23 @@ public class SheetDetailFragment extends BaseCommonFragment implements View.OnCl
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_sheet_detail, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        musicPlayerManager.addMusicPlayerListener(this);
+
+        //滚动到当前音乐位置并显示选中状态
+        scrollPosition();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        musicPlayerManager.removeMusicPlayerListener(this);
     }
 
     @Override
@@ -146,6 +170,7 @@ public class SheetDetailFragment extends BaseCommonFragment implements View.OnCl
         super.initData();
 
         listManager = MusicPlayerService.getListManager(getCurrentActivity());
+        musicPlayerManager = MusicPlayerService.getMusicPlayerManager(getCurrentActivity());
 
         fetchData();
     }
@@ -265,6 +290,9 @@ public class SheetDetailFragment extends BaseCommonFragment implements View.OnCl
 
         //收藏按钮
         showCollectionStatus();
+
+        //滚动到当前音乐位置并显示选中状态
+        scrollPosition();
     }
 
     @SuppressLint("ResourceType")
@@ -394,4 +422,56 @@ public class SheetDetailFragment extends BaseCommonFragment implements View.OnCl
     private void onCommentClick() {
         startActivityContainFragment(CommonToolbarActivity.class, Constant.COMMENT_FRAGMENT, sheetId);
     }
+
+    /**
+     * 滚动到当前音乐位置并显示选中状态
+     */
+    private void scrollPosition() {
+        rv.post(new Runnable() {
+            @Override
+            public void run() {
+                List<Song> songList = adapter.getData();
+                Song playingSong = listManager.getData();
+                if (songList.size() > 0 && playingSong != null) {
+                    int index = -1;
+                    Song song;
+                    for (int i = 0; i < songList.size(); i++) {
+                        song = songList.get(i);
+                        if (song.getId().equals(playingSong.getId())) {
+                            index = i;
+                            break;
+                        }
+                    }
+
+                    if (index != -1) {
+                        adapter.setSelectedIndex(index + 1);
+                    } else {
+                        adapter.setSelectedIndex(-1);
+                    }
+                }
+            }
+        });
+    }
+
+    ///////////////////////////播放管理监听器////////////////////////////
+    @Override
+    public void onPaused(Song data) {
+
+    }
+
+    @Override
+    public void onPlaying(Song data) {
+
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mp, Song data) {
+        scrollPosition();
+    }
+
+    @Override
+    public void onProgress(Song data) {
+
+    }
+    /////////////////////////end 播放管理监听器//////////////////////////
 }

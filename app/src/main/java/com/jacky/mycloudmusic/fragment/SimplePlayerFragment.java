@@ -178,6 +178,9 @@ public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.
 
         //显示播放状态
         showMusicPlayStatus();
+
+        //滚动到当前音乐位置并显示选中状态
+        scrollPosition();
     }
 
     /**
@@ -314,6 +317,9 @@ public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.
 
         //显示时长
         showDuration();
+
+        //滚动到当前音乐位置并显示选中状态
+        scrollPosition();
     }
 
     private void ShowSongName() {
@@ -373,5 +379,21 @@ public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.
 
         //设置到进度条
         sbProgress.setProgress((int) progress);
+    }
+
+    /**
+     * 滚动到当前音乐位置并显示选中状态
+     */
+    private void scrollPosition() {
+        rv.post(new Runnable() {
+            @Override
+            public void run() {
+                int index = listManager.getDataList().indexOf(listManager.getData());
+                if (index != -1) {
+                    rv.scrollToPosition(index);
+                    adapter.setSelectedIndex(index);
+                }
+            }
+        });
     }
 }
