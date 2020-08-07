@@ -52,6 +52,13 @@ public class MainActivity extends BaseCommonActivity {
         processIntent(getIntent());
     }
 
+    /**
+     * 界面已经显示了
+     * <p>
+     * 不需要再次创建新界面的时候调用
+     *
+     * @param intent
+     */
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);

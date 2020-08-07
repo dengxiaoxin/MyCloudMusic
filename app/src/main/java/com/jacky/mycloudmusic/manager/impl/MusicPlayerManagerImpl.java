@@ -208,6 +208,11 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
         player.setLooping(b);
     }
 
+    @Override
+    public void setVolume(float leftVolume, float rightVolume) {
+        player.setVolume(leftVolume, rightVolume);
+    }
+
     private void publishMusicStatus() {
         if (isPlaying())
             ListUtil.eachListener(listeners, listener -> listener.onPlaying(data));

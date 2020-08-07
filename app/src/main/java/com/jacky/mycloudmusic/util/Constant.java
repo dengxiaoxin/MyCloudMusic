@@ -16,6 +16,8 @@ public class Constant {
     //Key
     public static final String GUIDE_IMAGE_ID = "GUIDE_IMAGE_ID";
     public static final String NICKNAME = "NICKNAME";
+    public static final String SHEET = "SHEET";
+    public static final String SONG = "SONG";
 
     //Intent Key
     public static final String FRAGMENT_TAG = "FRAGMENT_TAG";
@@ -103,4 +105,11 @@ public class Constant {
      * 循环模式数量
      */
     public static final int LOOP_MODEL_COUNT = 3;
+
+    /**
+     * 音乐平滑过渡的时间以及其计时器跳动的时间间隔
+     * 单位：毫秒
+     */
+    public static final long MUSIC_SMOOTH_DURATION = 500;
+    public static final long MUSIC_SMOOTH_INTERVAL = MUSIC_SMOOTH_DURATION / 10;
 }

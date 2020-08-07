@@ -32,6 +32,8 @@ public class SongAdapter extends BaseQuickAdapter<Song, BaseViewHolder> {
         } else {
             helper.setTextColor(R.id.tv_title, mContext.getResources().getColor(R.color.text));
         }
+
+        helper.addOnClickListener(R.id.ib_more);
     }
 
     public void setSelectedIndex(int index) {

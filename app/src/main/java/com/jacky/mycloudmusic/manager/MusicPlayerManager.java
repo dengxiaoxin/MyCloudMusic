@@ -59,4 +59,11 @@ public interface MusicPlayerManager {
      */
     void setLooping(boolean b);
 
+    /**
+     * 设置播放音量
+     *
+     * @param leftVolume  0-1 音量缩放值
+     * @param rightVolume 0-1 音量缩放值
+     */
+    void setVolume(float leftVolume, float rightVolume);
 }

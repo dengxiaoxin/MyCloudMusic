@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.palette.graphics.Palette;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +30,7 @@ import com.jacky.mycloudmusic.activity.CommonToolbarActivity;
 import com.jacky.mycloudmusic.adapter.SongAdapter;
 import com.jacky.mycloudmusic.domain.Sheet;
 import com.jacky.mycloudmusic.domain.Song;
+import com.jacky.mycloudmusic.domain.event.CollectSongClickEvent;
 import com.jacky.mycloudmusic.domain.response.DetailResponse;
 import com.jacky.mycloudmusic.listener.HttpObserver;
 import com.jacky.mycloudmusic.listener.MusicPlayerListener;
@@ -38,7 +40,12 @@ import com.jacky.mycloudmusic.networkapi.RetrofitAPI;
 import com.jacky.mycloudmusic.service.MusicPlayerService;
 import com.jacky.mycloudmusic.util.Constant;
 import com.jacky.mycloudmusic.util.ImageUtil;
+import com.jacky.mycloudmusic.util.LogUtil;
 import com.jacky.mycloudmusic.util.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -122,6 +129,8 @@ public class SheetDetailFragment extends BaseCommonFragment implements View.OnCl
 
         //滚动到当前音乐位置并显示选中状态
         scrollPosition();
+
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -129,6 +138,8 @@ public class SheetDetailFragment extends BaseCommonFragment implements View.OnCl
         super.onPause();
 
         musicPlayerManager.removeMusicPlayerListener(this);
+
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -335,6 +346,19 @@ public class SheetDetailFragment extends BaseCommonFragment implements View.OnCl
                 play(position);
             }
         });
+
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (R.id.ib_more == view.getId()) {
+                    LogUtil.d(TAG, "onItemChildClick:R.id.ib_more");
+
+                    FragmentManager fragmentManager = getCurrentActivity().getSupportFragmentManager();
+                    Song song = (Song) adapter.getData().get(position);
+                    SongMoreDialogFragment.show(fragmentManager, data, song);
+                }
+            }
+        });
     }
 
     /**
@@ -474,4 +498,9 @@ public class SheetDetailFragment extends BaseCommonFragment implements View.OnCl
 
     }
     /////////////////////////end 播放管理监听器//////////////////////////
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onCollectSongClickEvent(CollectSongClickEvent event) {
+        LogUtil.d(TAG, "onCollectSongClickEvent:" + event.getSong().getTitle());
+    }
 }

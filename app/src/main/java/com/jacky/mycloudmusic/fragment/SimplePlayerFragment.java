@@ -223,6 +223,7 @@ public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.
      */
     private void playOrPause() {
         if (musicPlayerManager.isPlaying()) {
+            showPlayStatus();
             listManager.pause();
         } else {
             listManager.resume();

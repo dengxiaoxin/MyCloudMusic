@@ -2,6 +2,7 @@ package com.jacky.mycloudmusic.manager.impl;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.os.CountDownTimer;
 
 import com.jacky.mycloudmusic.domain.Song;
 import com.jacky.mycloudmusic.listener.IntFunction;
@@ -105,8 +106,9 @@ public class ListManagerImpl implements ListManager, MusicPlayerListener {
 
         isPlayed = true;
 
-        this.data = data;
-        musicPlayerManager.play(String.format(Constant.RESOURCE_ENDPOINT, data.getUri()), data);
+        smoothPlayAction(data);
+//        this.data = data;
+//        musicPlayerManager.play(String.format(Constant.RESOURCE_ENDPOINT, data.getUri()), data);
 
         if (Constant.MODEL_LOOP_ONE == model) {
             musicPlayerManager.setLooping(true);
@@ -135,7 +137,8 @@ public class ListManagerImpl implements ListManager, MusicPlayerListener {
     public void pause() {
         LogUtil.d(TAG, "pause");
 
-        musicPlayerManager.pause();
+        //musicPlayerManager.pause();
+        smoothPauseOrResume(true);
     }
 
     @Override
@@ -144,7 +147,8 @@ public class ListManagerImpl implements ListManager, MusicPlayerListener {
 
         if (isPlayed) {
             //如果上次已经播放过
-            musicPlayerManager.resume();
+            //musicPlayerManager.resume();
+            smoothPauseOrResume(false);
         } else {
             //如果还没播放过
             play(data);
@@ -189,6 +193,101 @@ public class ListManagerImpl implements ListManager, MusicPlayerListener {
         return model;
     }
 
+    @Override
+    public void onPaused(Song data) {
+
+    }
+
+    @Override
+    public void onPlaying(Song data) {
+
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mp, Song data) {
+
+    }
+
+    @Override
+    public void onProgress(Song data) {
+
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        LogUtil.d(TAG, "onCompletion");
+        //单曲循环不会触发此事件
+        //所以这里只要处理非单曲循环的情况即可
+        next();
+    }
+
+    private void smoothPlayAction(Song data) {
+        if (this.data != null && musicPlayerManager.isPlaying()) {
+            //渐强的时长，单位：毫秒
+            final long duration = Constant.MUSIC_SMOOTH_DURATION;
+            //音量调节的时间间隔
+            long interval = Constant.MUSIC_SMOOTH_INTERVAL;
+
+            new CountDownTimer(duration, interval) {
+
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    float volume;
+                    volume = millisUntilFinished * 1.0f / duration;
+
+                    musicPlayerManager.setVolume(volume, volume);
+                }
+
+                @Override
+                public void onFinish() {
+                    musicPlayerManager.setVolume(1f, 1f);
+
+                    ListManagerImpl.this.data = data;
+                    musicPlayerManager.play(String.format(Constant.RESOURCE_ENDPOINT, data.getUri()), data);
+                }
+            }.start();
+        } else {
+            this.data = data;
+            musicPlayerManager.play(String.format(Constant.RESOURCE_ENDPOINT, data.getUri()), data);
+        }
+    }
+
+    private void smoothPauseOrResume(boolean isPause) {
+        if (!isPause) {
+            musicPlayerManager.setVolume(0f, 0f);
+            musicPlayerManager.resume();
+        }
+
+        //渐强的时长，单位：毫秒
+        final long duration = Constant.MUSIC_SMOOTH_DURATION;
+        //音量调节的时间间隔
+        long interval = Constant.MUSIC_SMOOTH_INTERVAL;
+
+        new CountDownTimer(duration, interval) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                float volume;
+                if (isPause) {
+                    volume = millisUntilFinished * 1.0f / duration;
+                } else {
+                    volume = 1f - millisUntilFinished * 1.0f / duration;
+                }
+
+                musicPlayerManager.setVolume(volume, volume);
+            }
+
+            @Override
+            public void onFinish() {
+                if (isPause) {
+                    musicPlayerManager.pause();
+                }
+
+                musicPlayerManager.setVolume(1f, 1f);
+            }
+        }.start();
+    }
+
     private Song changeSong(IntFunction<Integer> action) {
         int index = 0;
         if (Constant.MODEL_LOOP_RANDOM == model) {
@@ -219,33 +318,5 @@ public class ListManagerImpl implements ListManager, MusicPlayerListener {
         } else {
             return curIndex - 1;
         }
-    }
-
-    @Override
-    public void onPaused(Song data) {
-
-    }
-
-    @Override
-    public void onPlaying(Song data) {
-
-    }
-
-    @Override
-    public void onPrepared(MediaPlayer mp, Song data) {
-
-    }
-
-    @Override
-    public void onProgress(Song data) {
-
-    }
-
-    @Override
-    public void onCompletion(MediaPlayer mp) {
-        LogUtil.d(TAG, "onCompletion");
-        //单曲循环不会触发此事件
-        //所以这里只要处理非单曲循环的情况即可
-        next();
     }
 }
