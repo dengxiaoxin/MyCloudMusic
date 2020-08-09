@@ -362,7 +362,7 @@ public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.
         long end = musicPlayerManager.getData().getDuration();
 
         //将毫秒格式化为分钟:秒
-        tvEnd.setText(TimeUtil.formatMinuteSecond((int) end));
+        tvEnd.setText(TimeUtil.ms2ms((int) end));
 
         //设置到进度条
         sbProgress.setMax((int) end);
@@ -376,7 +376,7 @@ public class SimplePlayerFragment extends BaseCommonFragment implements SeekBar.
         long progress = musicPlayerManager.getData().getProgress();
 
         //将毫秒格式化为分钟:秒
-        tvStart.setText(TimeUtil.formatMinuteSecond((int) progress));
+        tvStart.setText(TimeUtil.ms2ms((int) progress));
 
         //设置到进度条
         sbProgress.setProgress((int) progress);

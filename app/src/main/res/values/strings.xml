@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">我心云音乐</string>
+    <string name="app_name">我的云音乐</string>
 
     <string name="copyright">Copyright © 2019 Ixuea. All Rights Reserved</string>
 
@@ -117,7 +117,7 @@
     <string name="error_share_failed">分享失败,请稍候再试!</string>
 
     <!--评论-->
-    <string name="hint_comment">人生苦短，我们只做好课！</string>
+    <string name="hint_comment">音乐的力量</string>
     <string name="send">发送</string>
     <string name="enter_comment">请输入评论内容!</string>
     <string name="comment_create_success">评论发布成功!</string>

@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,7 +34,7 @@ import butterknife.BindView;
 import io.reactivex.Observable;
 
 /**
- * A simple {@link Fragment} subclass.
+ * 发现界面
  */
 public class DiscoveryFragment extends BaseCommonFragment implements OnBannerListener {
     /**

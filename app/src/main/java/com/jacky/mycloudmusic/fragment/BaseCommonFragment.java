@@ -3,6 +3,8 @@ package com.jacky.mycloudmusic.fragment;
 import com.jacky.mycloudmusic.activity.BaseCommonActivity;
 import com.jacky.mycloudmusic.util.PreferencesUtil;
 
+import java.io.Serializable;
+
 import butterknife.ButterKnife;
 
 public class BaseCommonFragment extends BaseFragment {
@@ -40,6 +42,20 @@ public class BaseCommonFragment extends BaseFragment {
      */
     public void startActivity(Class<?> toActivityClass) {
         getCurrentActivity().startActivity(toActivityClass);
+    }
+
+    /**
+     * 启动界面，可以传递一个字符串参数
+     */
+    public void startActivityExtraId(Class<?> toActivityClass, String id) {
+        getCurrentActivity().startActivityExtraId(toActivityClass, id);
+    }
+
+    /**
+     * 启动界面，可以传递一个Serializable参数
+     */
+    public void startActivityExtraData(Class<?> toActivityClass, Serializable data) {
+        getCurrentActivity().startActivityExtraData(toActivityClass, data);
     }
 
     /**

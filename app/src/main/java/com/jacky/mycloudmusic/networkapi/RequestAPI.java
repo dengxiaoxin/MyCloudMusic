@@ -6,6 +6,7 @@ import com.jacky.mycloudmusic.domain.Session;
 import com.jacky.mycloudmusic.domain.Sheet;
 import com.jacky.mycloudmusic.domain.Song;
 import com.jacky.mycloudmusic.domain.User;
+import com.jacky.mycloudmusic.domain.Video;
 import com.jacky.mycloudmusic.domain.response.DetailResponse;
 import com.jacky.mycloudmusic.domain.response.ListResponse;
 
@@ -78,4 +79,16 @@ public interface RequestAPI {
      */
     @DELETE("v1/collections/{id}")
     Observable<Response<Void>> deleteCollect(@Path("id") String id);
+
+    /**
+     * 视频列表
+     */
+    @GET("v1/videos")
+    Observable<ListResponse<Video>> videos();
+
+    /**
+     * 视频详情
+     */
+    @GET("v1/videos/{id}")
+    Observable<DetailResponse<Video>> videoDetail(@Path("id") String id);
 }

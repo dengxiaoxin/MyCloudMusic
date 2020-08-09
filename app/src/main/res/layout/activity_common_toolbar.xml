@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        app:popupTheme="@style/ToolbarPopupTheme"
         app:navigationIcon="@drawable/icon_back_arrow_white"
+        app:popupTheme="@style/ToolbarPopupTheme"
         app:title="@string/login"
         app:titleTextColor="@color/white" />
 

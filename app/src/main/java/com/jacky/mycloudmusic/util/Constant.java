@@ -25,6 +25,7 @@ public class Constant {
     public static final String URL = "URL";
     public static final String ID = "COMMON_ID";
     public static final String SHEET_ID = "SHEET_ID";
+    public static final String DATA = "DATA";
 
     //Intent Action
     public static final String ACTION_AD = "com.jacky.mycloudmusic.ACTION_AD";

@@ -88,6 +88,10 @@ dependencies {
     //https://github.com/youth5201314/banner
     implementation 'com.youth.banner:banner:1.4.10'
 
+    //圆形图片控件
+    //https://github.com/hdodenhof/CircleImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
     //提供通过注解的方式引用控件
     //绑定方法
     //https://github.com/JakeWharton/butterknife
@@ -151,6 +155,18 @@ dependencies {
     //https://github.com/CymChad/BaseRecyclerViewAdapterHelper
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
 
+    //封装了RecyclerView
+    //https://github.com/jdsjlzx/LRecyclerView
+
+    //真实项目中要么自己封装
+    //要么用一个库
+    //很少像这类依赖两个框架
+    //我们这里的目的是想给大家在讲解一个一个框架的使用
+    //这样大家工作中就多一个选择
+
+    //总结起来就是：像分组这样的功能还是LRecyclerView用着方便点
+    implementation 'com.github.jdsjlzx:LRecyclerView:1.5.4.4'
+
     //内存泄漏检测工具
     //https://github.com/square/leakcanary
     //只有调试模式下才添加该依赖,需要的时候开启
@@ -162,6 +178,11 @@ dependencies {
     //更方便的使用glide和palette
     //https://github.com/florent37/GlidePalette
     implementation 'com.github.florent37:glidepalette:2.1.2'
+
+    //emoji支持库
+    implementation 'androidx.emoji:emoji-appcompat:1.1.0'
+    //emoji控件
+    implementation 'androidx.emoji:emoji-bundled:1.1.0'
 
     //Java测试依赖
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

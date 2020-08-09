@@ -1,6 +1,7 @@
 package com.jacky.mycloudmusic.util;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
@@ -9,6 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RawRes;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.MultiTransformation;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.jacky.mycloudmusic.R;
 
@@ -22,107 +26,74 @@ public class ImageUtil {
      * @param uri 绝对路径、相对路径都可传
      */
     public static void showAvatar(Activity activity, ImageView view, String uri) {
-        //获取头像通用配置
-        RequestOptions options = getAvatarCommonRequestOptions();
+        //获取头像配置
+        RequestOptions options = getCommonRequestOptions()
+                .circleCrop()
+                //相关图片更改为圆形图片
+                .placeholder(R.drawable.default_avatar_circle)
+                .error(R.drawable.error_img_circle);
 
         if (TextUtils.isEmpty(uri)) {
             //没有头像
             //显示默认头像
-            Glide.with(activity)
-                    .load(R.drawable.default_avatar)
-                    .apply(options)
-                    .into(view);
+            baseShow(activity, view, R.drawable.default_avatar, options);
         } else {
-            //有头像
-            //处理uri
-            //是相对路径则转换为绝对路径
-            if (!uri.startsWith("http"))
-                uri = String.format(Constant.RESOURCE_ENDPOINT, uri);
-
-            //显示图片
-            Glide.with(activity)
-                    .load(uri)
-                    .apply(options)
-                    .into(view);
+            baseShow(activity, view, uri, options);
         }
     }
 
     /**
-     * 获取头像通用配置
+     * 显示小的（10dp）圆角图片
+     * 处理网络传递过来的图片
+     *
+     * @param uri 相对路径
      */
-    private static RequestOptions getAvatarCommonRequestOptions() {
-        //获取通用配置
-        RequestOptions options = getCircleCommonRequestOptions();
+    public static void showSmallCorners(Activity activity, ImageView view, String uri) {
+        //获取通用功能配置
+        RequestOptions commonOptions = getCommonRequestOptions();
 
-        //相关图片更改为圆形图片
-        options.placeholder(R.drawable.default_avatar_circle);
-        options.error(R.drawable.error_img_circle);
+        //创建两个变换，一个是从中心裁剪，另一个是圆角
+        MultiTransformation<Bitmap> multiTransformation = new MultiTransformation<>(new CenterCrop(),
+                new RoundedCorners(DensityUtil.dip2px(activity, 10)));
 
-        return options;
+        //获取变换功能配置
+        RequestOptions transformOptions = RequestOptions.bitmapTransform(multiTransformation);
+
+        //显示图片
+        Glide.with(activity)
+                .load(String.format(Constant.RESOURCE_ENDPOINT, uri))
+                //应用变换
+                .apply(commonOptions)
+                .apply(transformOptions)
+                .into(view);
     }
 
     //=============显示圆形图片begin=============//
-
     /**
      * 显示圆形图片
      *
      * @param uri 绝对路径、相对路径都可传
      */
     public static void showCircle(Activity activity, ImageView view, String uri) {
-        //获取圆形通用的配置
-        RequestOptions options = getCircleCommonRequestOptions();
+        //获取圆形配置
+        RequestOptions options = getCommonRequestOptions().circleCrop();
 
-        if (TextUtils.isEmpty(uri)) {
-            //没有值
-            //显示默认图片
-            Glide.with(activity)
-                    .load(R.drawable.placeholder)
-                    .apply(options)
-                    .into(view);
-        } else {
-            //处理uri
-            //是相对路径则转换为绝对路径
-            if (!uri.startsWith("http"))
-                uri = String.format(Constant.RESOURCE_ENDPOINT, uri);
-
-            //显示图片
-            Glide.with(activity)
-                    .load(uri)
-                    .apply(options)
-                    .into(view);
-        }
+        baseShow(activity, view, uri, options);
     }
 
     /**
      * 显示圆形资源目录图片
      */
     public static void showCircle(Activity activity, ImageView view, @RawRes @DrawableRes @Nullable int resourceId) {
-        //获取公共圆形配置
-        RequestOptions options = getCircleCommonRequestOptions();
+        //获取圆形配置
+        RequestOptions options = getCommonRequestOptions().circleCrop();
 
         //显示图片
-        Glide.with(activity)
-                .load(resourceId)
-                .apply(options)
-                .into(view);
-    }
-
-    /**
-     * 获取圆形通用配置
-     */
-    private static RequestOptions getCircleCommonRequestOptions() {
-        //获取通用配置
-        RequestOptions options = getCommonRequestOptions();
-
-        //圆形裁剪
-        options.circleCrop();
-
-        return options;
+        baseShow(activity, view, resourceId, options);
     }
     //=============显示圆形图片end=============//
 
     //=============显示方形图片begin=============//
-
     /**
      * 显示图片
      *
@@ -132,13 +103,42 @@ public class ImageUtil {
         //获取功能配置
         RequestOptions options = getCommonRequestOptions();
 
+        baseShow(activity, view, uri, options);
+    }
+
+    /**
+     * 显示资源目录图片
+     */
+    public static void show(Activity activity, ImageView view, @RawRes @DrawableRes @Nullable int resourceId) {
+        //获取公共配置
+        RequestOptions options = getCommonRequestOptions();
+
+        baseShow(activity, view, resourceId, options);
+    }
+    //=============显示方形图片end=============//
+
+    //辅助方法
+
+    /**
+     * 显示资源目录图片
+     */
+    private static void baseShow(Activity activity, ImageView view, @RawRes @DrawableRes @Nullable int resourceId, RequestOptions options) {
+        Glide.with(activity)
+                .load(resourceId)
+                .apply(options)
+                .into(view);
+    }
+
+    /**
+     * 显示图片
+     *
+     * @param uri 绝对路径、相对路径都可传
+     */
+    public static void baseShow(Activity activity, ImageView view, String uri, RequestOptions options) {
+
         if (TextUtils.isEmpty(uri)) {
-            //没有值
-            //显示默认图片
-            Glide.with(activity)
-                    .load(R.drawable.placeholder)
-                    .apply(options)
-                    .into(view);
+            //没有值则显示默认图片
+            baseShow(activity, view, R.drawable.placeholder, options);
         } else {
             //处理uri
             //是相对路径则转换为绝对路径
@@ -151,19 +151,6 @@ public class ImageUtil {
                     .apply(options)
                     .into(view);
         }
-    }
-
-    /**
-     * 显示资源目录图片
-     */
-    public static void show(Activity activity, ImageView view, @RawRes @DrawableRes @Nullable int resourceId) {
-        //获取公共配置
-        RequestOptions options = getCommonRequestOptions();
-
-        Glide.with(activity)
-                .load(resourceId)
-                .apply(options)
-                .into(view);
     }
 
     /**
@@ -185,5 +172,4 @@ public class ImageUtil {
 
         return options;
     }
-    //=============显示方形图片end=============//
 }

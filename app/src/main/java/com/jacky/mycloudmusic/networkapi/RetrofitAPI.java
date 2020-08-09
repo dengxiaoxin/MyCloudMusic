@@ -9,6 +9,7 @@ import com.jacky.mycloudmusic.domain.Session;
 import com.jacky.mycloudmusic.domain.Sheet;
 import com.jacky.mycloudmusic.domain.Song;
 import com.jacky.mycloudmusic.domain.User;
+import com.jacky.mycloudmusic.domain.Video;
 import com.jacky.mycloudmusic.domain.response.DetailResponse;
 import com.jacky.mycloudmusic.domain.response.ListResponse;
 import com.jacky.mycloudmusic.util.Constant;
@@ -214,6 +215,25 @@ public class RetrofitAPI {
     public Observable<Response<Void>> deleteCollect(String id) {
         return requestAPI.deleteCollect(id)
                 //固定写法
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * 视频列表
+     */
+    public Observable<ListResponse<Video>> videos() {
+        return requestAPI.videos()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
+
+    /**
+     * 视频详情
+     */
+    public Observable<DetailResponse<Video>> videoDetail(String id) {
+        return requestAPI.videoDetail(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

@@ -12,9 +12,8 @@ import com.jacky.mycloudmusic.activity.BaseCommonActivity;
 import com.jacky.mycloudmusic.activity.CommonToolbarActivity;
 import com.jacky.mycloudmusic.adapter.NoArgViewPagerAdapter;
 import com.jacky.mycloudmusic.domain.Song;
+import com.jacky.mycloudmusic.domain.event.PageSelectedEvent;
 import com.jacky.mycloudmusic.fragment.DiscoveryFragment;
-import com.jacky.mycloudmusic.fragment.FriendFragment;
-import com.jacky.mycloudmusic.fragment.MineFragment;
 import com.jacky.mycloudmusic.fragment.VideoFragment;
 import com.jacky.mycloudmusic.indicator.SelectBigPagerTitleView;
 import com.jacky.mycloudmusic.manager.MusicPlayerManager;
@@ -29,6 +28,8 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNav
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -84,15 +85,15 @@ public class MainActivity extends BaseCommonActivity {
         //配置ViewPager
         //要添加的Fragment类
         ArrayList<Class<?>> fragClasses = new ArrayList<>();
-        fragClasses.add(MineFragment.class);
+        //fragClasses.add(MineFragment.class);
         fragClasses.add(DiscoveryFragment.class);
-        fragClasses.add(FriendFragment.class);
+        //fragClasses.add(FriendFragment.class);
         fragClasses.add(VideoFragment.class);
         //页面标题
         String[] pageTitle = new String[]{
-                getString(R.string.title_mine),
+                //getString(R.string.title_mine),
                 getString(R.string.title_discovery),
-                getString(R.string.title_friend),
+                //getString(R.string.title_friend),
                 getString(R.string.title_video)
         };
         NoArgViewPagerAdapter adapter = new NoArgViewPagerAdapter(getSupportFragmentManager(), fragClasses, pageTitle);
@@ -115,7 +116,7 @@ public class MainActivity extends BaseCommonActivity {
             //设置标题
             @Override
             public IPagerTitleView getTitleView(Context context, int index) {
-                //创建简单的文本控件
+                //创建自定义满足效果的文本控件
                 SelectBigPagerTitleView titleView = new SelectBigPagerTitleView(context);
 
                 //默认颜色
@@ -162,7 +163,7 @@ public class MainActivity extends BaseCommonActivity {
 
         //如果位置显示不下指示器时
         //是否自动调整
-        commonNavigator.setAdjustMode(true);
+        commonNavigator.setAdjustMode(false);
 
         //设置导航器，完成magicIndicator的build
         magicIndicator.setNavigator(commonNavigator);
@@ -179,7 +180,32 @@ public class MainActivity extends BaseCommonActivity {
         super.initData();
 
         //默认选中第二个界面
-        vpMain.setCurrentItem(1);
+        vpMain.setCurrentItem(0);
+    }
+
+    @Override
+    protected void initListeners() {
+        super.initListeners();
+
+        vpMain.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            //滑动时
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            //滑动完成后，成功跳转页面才执行，如果还是在原来页面，就不会执行
+            @Override
+            public void onPageSelected(int position) {
+                EventBus.getDefault().post(new PageSelectedEvent(position));
+            }
+
+            //滑动状态发生变化，三个值：0（END）,1(PRESS) , 2(UP)
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override

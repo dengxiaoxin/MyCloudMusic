@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <!--分割线-->
+    <include layout="@layout/divider_small" />
+
+    <!--评论输入框容器-->
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:paddingVertical="@dimen/margin_small"
+        android:paddingHorizontal="@dimen/margin_middle"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--输入框-->
+        <androidx.emoji.widget.EmojiAppCompatEditText
+            android:id="@+id/et_content"
+            android:hint="@string/hint_comment"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:maxLength="140"
+            android:textColor="@color/text"
+            android:layout_height="wrap_content" />
+
+        <!--发送按钮-->
+        <Button
+            android:id="@+id/bt_send"
+            android:text="@string/send"
+            android:background="@null"
+            android:textColor="@color/light_grey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

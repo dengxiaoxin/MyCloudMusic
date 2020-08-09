@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.VideoDetailActivity">
+
+    <!--内容容器-->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--播放器容器-->
+        <RelativeLayout
+            android:id="@+id/video_container"
+            android:background="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/video_container_height">
+
+            <!--视频播放器-->
+            <VideoView
+                android:id="@+id/vv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!--触摸层-->
+            <RelativeLayout
+                android:id="@+id/video_touch_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!--标题-->
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/abl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.AppBarOverlay"
+                android:background="@color/transparent"
+                app:elevation="0dp">
+
+                <!--Toolbar控件-->
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:popupTheme="@style/AppTheme.PopupOverlay" />
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <!--播放控制容器-->
+            <LinearLayout
+                android:id="@+id/control_container"
+                android:layout_marginHorizontal="@dimen/margin_middle"
+                android:layout_marginBottom="@dimen/margin_middle"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!--开始时间-->
+                <TextView
+                    android:text="00:00"
+                    android:id="@+id/tv_start"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <!--进度拖拽控件-->
+                <SeekBar
+                    android:id="@+id/sb_progress"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="@dimen/music_seek_bar_height"
+                    android:minHeight="@dimen/music_seek_bar_height"
+                    tools:max="100"
+                    tools:progress="20"
+                    android:progressDrawable="@drawable/shape_seek_bar" />
+
+                <!--结束时间-->
+                <TextView
+                    android:id="@+id/tv_end"
+                    android:text="00:00"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <!--全屏切换按钮-->
+                <ImageButton
+                    android:layout_marginLeft="@dimen/margin_middle"
+                    android:id="@+id/ib_screen"
+                    android:background="@null"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_full_screen"
+                    android:layout_width="@dimen/icon_height"
+                    android:layout_height="@dimen/icon_height"
+                    android:layout_marginStart="@dimen/margin_middle" />
+            </LinearLayout>
+
+            <!--播放按钮-->
+            <ImageButton
+                android:id="@+id/ib_play"
+                android:src="@drawable/ic_video_play"
+                android:background="@null"
+                android:scaleType="centerInside"
+                android:layout_centerInParent="true"
+                android:layout_width="@dimen/button_height"
+                android:layout_height="@dimen/button_height" />
+
+            <!--播放信息-->
+            <TextView
+                android:id="@+id/tv_info"
+                android:layout_alignParentBottom="true"
+                android:text="这是提示信息"
+                android:textColor="@color/white"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <!--列表控件-->
+        <com.github.jdsjlzx.recyclerview.LRecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!--发布评论输入框-->
+        <include layout="@layout/input_comment" />
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

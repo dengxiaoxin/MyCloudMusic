@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.emoji.bundled.BundledEmojiCompatConfig;
+import androidx.emoji.text.EmojiCompat;
 import androidx.multidex.MultiDex;
 
 import com.jacky.mycloudmusic.activity.LoginOrRegisterActivity;
@@ -29,9 +31,15 @@ public class AppContext extends Application {
 
         context = this;
 
+        //初始化第三方toast工具类
         Toasty.Config.getInstance().apply();
 
+        //初始化toast工具类
         ToastUtil.init(getApplicationContext());
+
+        //初始化emoji
+        BundledEmojiCompatConfig config = new BundledEmojiCompatConfig(this);
+        EmojiCompat.init(config);
     }
 
     @Override

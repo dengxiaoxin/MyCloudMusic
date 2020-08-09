@@ -3,6 +3,7 @@ package com.jacky.mycloudmusic.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -10,6 +11,8 @@ import android.view.WindowManager;
 
 import com.jacky.mycloudmusic.util.Constant;
 import com.jacky.mycloudmusic.util.PreferencesUtil;
+
+import java.io.Serializable;
 
 import butterknife.ButterKnife;
 
@@ -148,6 +151,37 @@ public class BaseCommonActivity extends BaseActivity {
      */
     public void startActivity(Class<?> toActivityClass) {
         Intent intent = new Intent(getCurrentActivity(), toActivityClass);
+        startActivity(intent);
+    }
+
+    /**
+     * 启动界面，可以传递一个字符串参数
+     */
+    public void startActivityExtraId(Class<?> toActivityClass, String id) {
+        //创建Intent
+        Intent intent = new Intent(getCurrentActivity(), toActivityClass);
+
+        //传递数据
+        if (!TextUtils.isEmpty(id)) {
+            //不为空才传递
+            intent.putExtra(Constant.ID, id);
+        }
+
+        //启动界面
+        startActivity(intent);
+    }
+
+    /**
+     * 启动界面，可以传递一个Serializable参数
+     */
+    public void startActivityExtraData(Class<?> toActivityClass, Serializable data) {
+        //创建intent
+        Intent intent = new Intent(getCurrentActivity(), toActivityClass);
+
+        //传递数据
+        intent.putExtra(Constant.DATA, data);
+
+        //启动界面
         startActivity(intent);
     }
 
