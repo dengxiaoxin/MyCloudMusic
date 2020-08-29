@@ -179,10 +179,23 @@ dependencies {
     //https://github.com/florent37/GlidePalette
     implementation 'com.github.florent37:glidepalette:2.1.2'
 
+    //动态处理权限
+    //https://github.com/permissions-dispatcher/PermissionsDispatcher
+    implementation 'org.permissionsdispatcher:permissionsdispatcher:4.5.0'
+    annotationProcessor "org.permissionsdispatcher:permissionsdispatcher-processor:4.5.0"
+
     //emoji支持库
     implementation 'androidx.emoji:emoji-appcompat:1.1.0'
     //emoji控件
     implementation 'androidx.emoji:emoji-bundled:1.1.0'
+
+    //图片手势缩放控件
+    //https://github.com/chrisbanes/PhotoView
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
+    //通用IO相关工具类
+    //http://commons.apache.org/proper/commons-io/
+    implementation 'commons-io:commons-io:2.6'
 
     //Java测试依赖
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

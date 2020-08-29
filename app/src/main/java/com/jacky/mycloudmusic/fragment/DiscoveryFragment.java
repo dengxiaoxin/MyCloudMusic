@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jacky.mycloudmusic.R;
 import com.jacky.mycloudmusic.activity.CommonToolbarActivity;
+import com.jacky.mycloudmusic.activity.ImagePreviewActivity;
 import com.jacky.mycloudmusic.adapter.DiscoveryAdapter;
 import com.jacky.mycloudmusic.domain.Ad;
 import com.jacky.mycloudmusic.domain.BaseMultiItemEntity;
@@ -130,6 +131,22 @@ public class DiscoveryFragment extends BaseCommonFragment implements OnBannerLis
                     Sheet sheet = (Sheet) data;
                     startActivityContainFragment(CommonToolbarActivity.class, Constant.SHEET_DETAIL_FRAGMENT, sheet.getId());
                 }
+            }
+        });
+
+        adapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+                Object data = adapter.getItem(position);
+                if (data instanceof Song) {
+                    //单曲
+                } else if (data instanceof Sheet) {
+                    //歌单
+                    Sheet sheet = (Sheet) data;
+                    ImagePreviewActivity.start(getCurrentActivity(), sheet.getId(), sheet.getBanner());
+                    return true;
+                }
+                return false;
             }
         });
     }

@@ -8,6 +8,8 @@ public class ResourceUtil {
      * 将相对资源转为绝对路径
      */
     public static String resourceUri(String uri) {
-        return String.format(Constant.RESOURCE_ENDPOINT, uri);
+        if (!uri.startsWith("http"))
+            uri = String.format(Constant.RESOURCE_ENDPOINT, uri);
+        return uri;
     }
 }
