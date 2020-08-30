@@ -21,7 +21,9 @@ import com.jacky.mycloudmusic.domain.Song;
 import com.jacky.mycloudmusic.domain.Title;
 import com.jacky.mycloudmusic.domain.response.ListResponse;
 import com.jacky.mycloudmusic.listener.HttpObserver;
+import com.jacky.mycloudmusic.manager.ListManager;
 import com.jacky.mycloudmusic.networkapi.RetrofitAPI;
+import com.jacky.mycloudmusic.service.MusicPlayerService;
 import com.jacky.mycloudmusic.util.Constant;
 import com.jacky.mycloudmusic.util.GlideImageLoader;
 import com.youth.banner.Banner;
@@ -126,6 +128,13 @@ public class DiscoveryFragment extends BaseCommonFragment implements OnBannerLis
                 Object data = adapter.getItem(position);
                 if (data instanceof Song) {
                     //单曲
+                    List<Song> songList = new ArrayList<>();
+                    Song song = (Song) data;
+                    songList.add(song);
+                    ListManager listManager = MusicPlayerService.getListManager(getCurrentActivity());
+                    listManager.setDataList(songList);
+                    listManager.playWithCheck(song);
+                    startActivityContainFragment(CommonToolbarActivity.class, Constant.SIMPLE_PLAYER_FRAGMENT);
                 } else if (data instanceof Sheet) {
                     //歌单
                     Sheet sheet = (Sheet) data;

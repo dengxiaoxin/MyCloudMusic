@@ -337,6 +337,7 @@ public class SheetDetailFragment extends BaseCommonFragment implements View.OnCl
         btnCollection.setOnClickListener(this);
         llUser.setOnClickListener(this);
         llCommentContainer.setOnClickListener(this);
+        llPlayAllContainer.setOnClickListener(this);
 
         //设置item点击事件
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -388,6 +389,9 @@ public class SheetDetailFragment extends BaseCommonFragment implements View.OnCl
                 break;
             case R.id.ll_comment_container:
                 onCommentClick();
+                break;
+            case R.id.ll_play_all_container:
+                play(0);
                 break;
             default:
                 break;
